@@ -1,31 +1,32 @@
-# Module 2 culminating activity — Climate memory + evidence
+# Climate Memory + Evidence — redesigned interview/reflection activity
 
-A GitHub Pages-ready, accessible HTML activity.
+## Flow
+1. Illustrative title page
+2. Does the climate record match what we remember?
+3. Choose self-reflection or interview
+4. Questions to use
+   - interview path tells learner to leave the tab open
+   - includes Copy return link
+   - includes large "I'm back — continue" button
+5. Choose one observation from a dropdown
+6. Select one or more evidence types
+7. View only data sources aligned with those evidence types
+8. Describe the pattern found
+9. Compare the observation with the climate record
+10. Review and save responses to Garden Journal
 
-## Learner flow
-1. Reflect on their own experience OR interview a long-time resident.
-2. Choose one specific climate observation to investigate.
-3. Select an evidence type and use an easy climate-data resource.
-4. Decide whether the data mostly supports, complicates, or does not clearly answer the observation.
-5. Carry the finding into the Garden Observation Journal.
+## Journal handoff
+The final button transfers:
+- selected observation (as readable text)
+- climate-data finding
+- comparison result
 
-## Included resources
-- xmACIS: https://xmacis.rcc-acis.org/
-- Climate Toolbox: https://climatetoolbox.org/
-- Drought.gov Historical Data & Conditions:
-  https://www.drought.gov/data-maps-tools/historical-drought-data-conditions-tool
-- Garden Observation Journal:
-  https://beritdinsdale-oss.github.io/garden-observation-journal/
+The current Garden Journal activity-navigation build supports this handoff and opens:
+Module 2 → Climate Memory + Evidence
 
-## Deployment
-Upload `index.html`, `styles.css`, and `app.js` to a GitHub repository.
-Enable GitHub Pages from the main branch/root.
-
-## Accessibility
-- Semantic headings and fieldsets
-- Keyboard-operable buttons
-- Visible focus indicators
-- Skip link
-- Responsive single-column layout
-- Reduced-motion support
-- Text labels do not rely on color alone
+## Upload
+Upload these files directly to the repository root:
+- index.html
+- styles.css
+- app.js
+- README.md
