@@ -5,7 +5,36 @@ document.querySelectorAll(".back").forEach(b=>b.addEventListener("click",()=>sho
 steps.forEach((s,i)=>s.addEventListener("click",()=>show(i)));
 document.querySelectorAll(".choice").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".choice").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");state.path=b.dataset.path;const box=document.querySelector("#memoryPrompts");box.classList.remove("hidden");box.innerHTML=state.path==="self"?`<strong>Think back over the years you have lived here.</strong><ul><li>What seems different about the seasons?</li><li>Have heat, rainfall, snow, frost, or extreme weather changed?</li><li>Have you noticed changes in bloom time, irrigation needs, pests, or the growing season?</li><li>Which change are you most confident you have noticed?</li></ul><p><strong>Write down a few notes before continuing.</strong></p>`:`<strong>Ask your interview partner:</strong><ul><li>What seems different about the seasons now compared with the past?</li><li>Have heat, rainfall, snow, frost, or extreme weather changed?</li><li>Have you noticed changes in bloom time, irrigation needs, pests, or the growing season?</li><li>Which change are you most confident you have noticed?</li></ul><p><strong>Write down a few notes before continuing.</strong></p>`;box.focus()}));
 document.querySelectorAll('input[name="evidence"]').forEach(r=>r.addEventListener("change",()=>{const type=r.value;document.querySelectorAll(".resource").forEach(card=>card.classList.toggle("highlight",card.dataset.types.includes(type)))}));
-document.querySelectorAll(".verdict").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".verdict").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");state.verdict=b.dataset.verdict;const f=document.querySelector("#compareFeedback");f.classList.remove("hidden");const msgs={supports:"The data you found generally lines up with the observation. In your journal, note the evidence that made the connection convincing.",mixed:"A mixed result is useful. Climate patterns can be complex, and an observation may capture only part of what is changing.",unclear:"An unclear result is also a valid finding. Note what information was missing or what you would need to investigate next."};f.textContent=msgs[state.verdict]}));
-function summary(){document.querySelector("#summaryObservation").textContent=document.querySelector("#observation").value.trim()||"Your original observation";document.querySelector("#summaryFinding").textContent=document.querySelector("#finding").value.trim()||"The pattern you found in the climate record";const v={supports:"Mostly supports the observation",mixed:"The picture is mixed",unclear:"Not enough evidence"};document.querySelector("#summaryVerdict").textContent=v[state.verdict]||"Supported, mixed, or not enough evidence";}
+document.querySelectorAll(".verdict").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".verdict").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");state.verdict=b.dataset.verdict;updateJournalHandoff();const f=document.querySelector("#compareFeedback");f.classList.remove("hidden");const msgs={supports:"The data you found generally lines up with the observation. In your journal, note the evidence that made the connection convincing.",mixed:"A mixed result is useful. Climate patterns can be complex, and an observation may capture only part of what is changing.",unclear:"An unclear result is also a valid finding. Note what information was missing or what you would need to investigate next."};f.textContent=msgs[state.verdict]}));
+function summary(){document.querySelector("#summaryObservation").textContent=document.querySelector("#observation").value.trim()||"Your original observation";document.querySelector("#summaryFinding").textContent=document.querySelector("#finding").value.trim()||"The pattern you found in the climate record";const v={supports:"Mostly supports the observation",mixed:"The picture is mixed",unclear:"Not enough evidence"};document.querySelector("#summaryVerdict").textContent=v[state.verdict]||"Supported, mixed, or not enough evidence";updateJournalHandoff();}
+
+function encodeHandoff(obj){
+  const bytes=new TextEncoder().encode(JSON.stringify(obj));
+  let binary="";
+  bytes.forEach(b=>binary+=String.fromCharCode(b));
+  return btoa(binary).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+}
+
+function updateJournalHandoff(){
+  const link=document.querySelector("#journalHandoff");
+  if(!link) return;
+
+  const payload={
+    version:1,
+    source:"climate-memory-evidence",
+    observation:document.querySelector("#observation")?.value.trim()||"",
+    finding:document.querySelector("#finding")?.value.trim()||"",
+    verdict:state.verdict||""
+  };
+
+  const encoded=encodeHandoff(payload);
+  link.href=`https://beritdinsdale-oss.github.io/garden-observation-journal/#handoff=${encoded}`;
+}
+
+document.querySelector("#observation")?.addEventListener("input",updateJournalHandoff);
+document.querySelector("#finding")?.addEventListener("input",updateJournalHandoff);
+
 document.querySelector("#restart").addEventListener("click",()=>{document.querySelectorAll("textarea").forEach(x=>x.value="");document.querySelectorAll("input").forEach(x=>x.checked=false);document.querySelectorAll(".selected,.highlight").forEach(x=>x.classList.remove("selected","highlight"));document.querySelector("#memoryPrompts").classList.add("hidden");document.querySelector("#compareFeedback").classList.add("hidden");state={path:"",verdict:""};show(0)});
 show(0);
+
+updateJournalHandoff();
