@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Does the Climate Record Match What We Remember?</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to activity</a>
+<header class="hero">
+  <div class="hero-inner">
+    <p class="eyebrow">Module 2 • Climate evidence</p>
+    <h1>Does the climate record match what we remember?</h1>
+    <p class="lede">Start with an observation. Then use climate data to see whether the evidence supports it, complicates it, or leaves the question open.</p>
+  </div>
+</header>
+
+<nav class="roadmap" aria-label="Activity progress">
+  <button data-go="0" class="step active"><span>1</span>Remember</button>
+  <button data-go="1" class="step"><span>2</span>Focus</button>
+  <button data-go="2" class="step"><span>3</span>Check</button>
+  <button data-go="3" class="step"><span>4</span>Compare</button>
+  <button data-go="4" class="step"><span>5</span>Journal</button>
+</nav>
+
+<main id="main" class="shell">
+<section class="page active" data-page="0">
+  <div class="card">
+    <div class="icon" aria-hidden="true">💭</div>
+    <p class="kicker">Start with lived experience</p>
+    <h2>Choose how you will begin</h2>
+    <p>Climate records tell us what has changed over time. Personal observations can help us decide what questions to ask of those records.</p>
+    <div class="choice-grid">
+      <button class="choice" data-path="self">
+        <strong>Reflect on my own experience</strong>
+        <span>Choose this if you have lived in your area long enough to have noticed changes.</span>
+      </button>
+      <button class="choice" data-path="interview">
+        <strong>Interview someone</strong>
+        <span>Talk with someone who has lived in the area for many years.</span>
+      </button>
+    </div>
+    <div id="memoryPrompts" class="prompt-box hidden" tabindex="-1"></div>
+  </div>
+  <div class="navrow"><span></span><button class="primary next">Continue →</button></div>
+</section>
+
+<section class="page" data-page="1">
+  <div class="card">
+    <div class="icon" aria-hidden="true">🎯</div>
+    <p class="kicker">Turn a memory into a question</p>
+    <h2>Choose one observation to investigate</h2>
+    <p>Pick one specific change from your reflection or interview. You do not need to investigate everything that was mentioned.</p>
+    <div class="example">
+      <strong>For example</strong>
+      <p>“Summers seem hotter than they used to.”</p>
+      <p class="arrow">↓</p>
+      <p><strong>What could I check?</strong> Long-term summer temperature.</p>
+    </div>
+    <label for="observation">The observation I want to investigate:</label>
+    <textarea id="observation" rows="3" placeholder="Example: Our summers seem hotter than they used to."></textarea>
+    <fieldset>
+      <legend>What kind of evidence could help you check it?</legend>
+      <div class="chips">
+        <label><input type="radio" name="evidence" value="temperature"> 🌡️ Temperature</label>
+        <label><input type="radio" name="evidence" value="precipitation"> 🌧️ Rain or precipitation</label>
+        <label><input type="radio" name="evidence" value="drought"> ☀️ Drought or dry periods</label>
+        <label><input type="radio" name="evidence" value="snow"> ❄️ Snow or winter conditions</label>
+        <label><input type="radio" name="evidence" value="season"> 🌱 Frost or growing season</label>
+      </div>
+    </fieldset>
+  </div>
+  <div class="navrow"><button class="secondary back">← Back</button><button class="primary next">Find evidence →</button></div>
+</section>
+
+<section class="page" data-page="2">
+  <div class="card">
+    <div class="icon" aria-hidden="true">📊</div>
+    <p class="kicker">Check the climate record</p>
+    <h2>Choose a resource that fits your question</h2>
+    <p>You do not need to use every resource. Start with the one that best matches the observation you want to investigate.</p>
+
+    <div class="resource-grid">
+      <article class="resource recommended" data-types="temperature precipitation snow">
+        <span class="tag">You already know this one</span>
+        <h3>xmACIS</h3>
+        <p>Use a nearby weather station to explore long-term temperature, precipitation, or snowfall records.</p>
+        <a class="resource-btn" href="https://xmacis.rcc-acis.org/" target="_blank" rel="noopener">Open xmACIS ↗</a>
+      </article>
+      <article class="resource" data-types="temperature precipitation season drought">
+        <h3>Climate Toolbox</h3>
+        <p>Explore historical climate patterns and garden-relevant measures such as temperature, precipitation, drought, frost, and growing-season conditions.</p>
+        <a class="resource-btn" href="https://climatetoolbox.org/" target="_blank" rel="noopener">Open Climate Toolbox ↗</a>
+      </article>
+      <article class="resource" data-types="drought precipitation">
+        <h3>Drought.gov Historical Data</h3>
+        <p>Explore historical drought conditions by state or county using maps and time-series graphs.</p>
+        <a class="resource-btn" href="https://www.drought.gov/data-maps-tools/historical-drought-data-conditions-tool" target="_blank" rel="noopener">Open Drought.gov ↗</a>
+      </article>
+    </div>
+
+    <aside class="notice">
+      <strong>Look across many years.</strong>
+      <span>A single unusual year is weather. Climate patterns emerge from records covering decades.</span>
+    </aside>
+
+    <label for="finding">What pattern did you find in the data?</label>
+    <textarea id="finding" rows="4" placeholder="Describe the pattern and include one piece of evidence you noticed."></textarea>
+  </div>
+  <div class="navrow"><button class="secondary back">← Back</button><button class="primary next">Compare →</button></div>
+</section>
+
+<section class="page" data-page="3">
+  <div class="card">
+    <div class="icon" aria-hidden="true">🔎</div>
+    <p class="kicker">Evidence + experience</p>
+    <h2>How does the climate record compare?</h2>
+    <p>Your goal is not to decide whether someone's memory was “right” or “wrong.” Decide how well the available evidence lines up with the observation.</p>
+    <div class="verdict-grid" role="group" aria-label="Choose how the evidence compares">
+      <button class="verdict" data-verdict="supports"><span>✓</span><strong>Mostly supports it</strong><small>The long-term record shows a similar pattern.</small></button>
+      <button class="verdict" data-verdict="mixed"><span>↔</span><strong>The picture is mixed</strong><small>Some evidence lines up, but other evidence complicates the story.</small></button>
+      <button class="verdict" data-verdict="unclear"><span>?</span><strong>Not enough evidence</strong><small>The data I found does not clearly answer the observation.</small></button>
+    </div>
+    <div id="compareFeedback" class="feedback hidden" aria-live="polite"></div>
+    <details>
+      <summary>Why might experience and climate data differ?</summary>
+      <ul>
+        <li>A person's observation may cover a shorter period than the climate record.</li>
+        <li>Conditions can vary substantially from year to year.</li>
+        <li>A garden's microclimate may differ from the nearest weather station.</li>
+        <li>Precipitation totals do not necessarily show when the rain or snow occurred.</li>
+        <li>Some climate changes are easier to detect confidently than others.</li>
+      </ul>
+    </details>
+  </div>
+  <div class="navrow"><button class="secondary back">← Back</button><button class="primary next">Finish in my journal →</button></div>
+</section>
+
+<section class="page" data-page="4">
+  <div class="card finish">
+    <div class="icon" aria-hidden="true">📓</div>
+    <p class="kicker">Carry the evidence forward</p>
+    <h2>Add your investigation to your Garden Observation Journal</h2>
+    <p>Keep the useful part of this investigation somewhere you can return to later in the course.</p>
+    <div class="journal-list">
+      <div><span>1</span><p><strong>The observation I investigated</strong><br><span id="summaryObservation">Your original observation</span></p></div>
+      <div><span>2</span><p><strong>The evidence I found</strong><br><span id="summaryFinding">The pattern you found in the climate record</span></p></div>
+      <div><span>3</span><p><strong>How they compared</strong><br><span id="summaryVerdict">Supported, mixed, or not enough evidence</span></p></div>
+      <div><span>4</span><p><strong>Something I want to keep watching</strong><br>A garden condition, seasonal change, or climate signal you can revisit.</p></div>
+    </div>
+    <a class="journal-btn" href="https://beritdinsdale-oss.github.io/garden-observation-journal/" target="_blank" rel="noopener">Open my Garden Journal ↗</a>
+    <p class="privacy">Your typed responses in this activity stay in this browser session. Copy the ideas you want to keep into your journal before closing the page.</p>
+  </div>
+  <div class="navrow"><button class="secondary back">← Back</button><button class="secondary" id="restart">Start over</button></div>
+</section>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
