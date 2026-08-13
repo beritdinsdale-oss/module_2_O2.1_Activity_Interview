@@ -13,3 +13,19 @@ fieldset{border:0;padding:0;margin:1rem 0}.chips{display:flex;flex-wrap:wrap;gap
 .journal-list{margin:1.4rem 0}.journal-list div{display:flex;gap:1rem;align-items:flex-start;padding:.85rem 0;border-bottom:1px solid var(--line)}.journal-list div>span{flex:0 0 2rem;height:2rem;display:grid;place-items:center;border-radius:50%;background:var(--sun);font-weight:900}.journal-list p{margin:0}.journal-btn{font-size:1.1rem;padding:.9rem 1.1rem}.privacy{font-size:.88rem;color:var(--muted);margin-top:1.2rem}.hidden{display:none!important}
 @media(max-width:720px){body{font-size:17px}.choice-grid,.resource-grid,.verdict-grid{grid-template-columns:1fr}.roadmap{justify-content:flex-start}.step{font-size:.85rem}.navrow{align-items:stretch}.navrow button{flex:1}}
 @media(prefers-reduced-motion:no-preference){.page.active{animation:fade .25s ease}@keyframes fade{from{opacity:.25;transform:translateY(4px)}to{opacity:1;transform:none}}}
+
+.journal-transfer-note{
+  margin:1.35rem 0;
+  padding:1rem 1.15rem;
+  border-radius:18px;
+  background:var(--mint);
+  border-left:6px solid var(--accent);
+}
+.journal-transfer-note strong{display:block}
+.journal-transfer-note p{margin:.4rem 0 0}
+.journal-reminder{
+  margin:1.25rem 0 .65rem;
+  padding:.8rem 1rem;
+  border-radius:14px;
+  background:var(--sky);
+}
