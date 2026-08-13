@@ -44,3 +44,11 @@ The observation-selection page now uses broader observation categories:
 
 Selecting Other reveals a short fill-in field. The custom observation is also included in
 the review screen and transferred to the Garden Journal.
+
+
+## Revision 3 — playful visual and copy refresh
+- Warmer, conversational instructions throughout
+- Brighter garden-notebook visual system with layered pastel cards and decorative doodles
+- More varied page treatments so the activity feels less like a form
+- Stronger visual hierarchy for choices, conversation prompts, evidence chips, resources, and results
+- Same accessibility-minded structure and same Garden Journal handoff

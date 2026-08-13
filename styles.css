@@ -49,3 +49,59 @@ textarea{resize:vertical;min-height:145px}.evidence-fieldset{border:0;padding:0;
 button:focus,a:focus,select:focus,textarea:focus,input:focus{outline:3px solid #ffbf47;outline-offset:3px}
 @media(max-width:720px){body{font-size:17px}.topbar{position:static}.progress{width:95px}.choice-grid,.resource-grid,.verdict-grid{grid-template-columns:1fr}.navrow{align-items:stretch}.navrow button{flex:1}}
 @media(prefers-reduced-motion:no-preference){.page.active{animation:fade .22s ease}@keyframes fade{from{opacity:.2;transform:translateY(4px)}to{opacity:1;transform:none}}}
+
+/* Playful visual refresh */
+:root{
+ --berry:#6b4bb6;--berry-pale:#f1ecff;--blue:#347fb3;--yellow:#ffd86b;
+ --pink:#f6b9c6;--leaf:#68a86d;--cream:#fff9e9;
+}
+body{
+ background:
+ radial-gradient(circle at 8% 8%,rgba(255,216,107,.22),transparent 22rem),
+ radial-gradient(circle at 92% 24%,rgba(246,185,198,.18),transparent 24rem),
+ linear-gradient(180deg,#f5fbff 0%,#fffaf0 54%,#f5fbf3 100%);
+}
+.topbar{box-shadow:0 3px 18px rgba(53,82,89,.06)}
+.card{
+ border:1px solid #dce6e2;
+ box-shadow:0 18px 50px rgba(54,83,90,.11);
+ overflow:hidden;position:relative;
+}
+.card:before{
+ content:"";position:absolute;width:115px;height:115px;border-radius:50%;
+ background:rgba(255,216,107,.11);right:-48px;top:-48px;pointer-events:none
+}
+.card h1,.card h2{color:#233e70;letter-spacing:-.025em}
+.kicker{color:var(--berry);font-weight:900}
+.lede{color:#3b535d}
+.illustration{position:relative;background:linear-gradient(135deg,#fff9e8,#f2fbff);
+ border:1px solid #e5e6d8;border-radius:28px;padding:.55rem;transform:rotate(-.5deg)}
+.illustration.small{margin-bottom:1.35rem}
+.hero-illustration{box-shadow:8px 9px 0 rgba(107,75,182,.08)}
+.sparkle{position:absolute;right:10px;top:5px;color:#e7a92e;font-size:1.4rem;transform:rotate(15deg)}
+.doodle{position:absolute;z-index:2;font-size:1.7rem}.doodle-a{left:10px;bottom:5px;color:#d86e83}.doodle-b{right:12px;top:7px;color:#e3a51d}
+.soft-box{background:linear-gradient(135deg,#f3edff,#fff7d9);border:1px solid #e7dbf9}
+.notice{background:linear-gradient(135deg,#fff0b8,#fff8dc);border:1px solid #eed581}
+.choice{transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease}
+.choice:hover{transform:translateY(-3px);box-shadow:0 9px 20px rgba(65,94,99,.10)}
+.choice:nth-child(1){background:linear-gradient(145deg,#fffdf8,#eff9ed)}
+.choice:nth-child(2){background:linear-gradient(145deg,#fffdf8,#eef7ff)}
+.choice-icon{width:3.2rem;height:3.2rem;border-radius:50%;display:grid!important;place-items:center;background:white;box-shadow:0 4px 12px rgba(0,0,0,.07);margin-bottom:.55rem}
+.question-list>div{background:#fffaf0;border:1px solid #f1e5c5;border-radius:16px;margin:.6rem 0;padding:.85rem 1rem}
+.question-list>div:nth-child(even){background:#f4f9ff;border-color:#dceaf5}
+.question-list>div>span{background:var(--yellow);color:#493b10}
+.return-box{background:linear-gradient(135deg,#ffe8dc,#fff5dc);border:1px solid #f0cdb9}
+select,textarea{box-shadow:inset 0 1px 2px rgba(30,55,60,.04)}
+.chips label{transition:.15s ease;background:white;border-width:2px}
+.chips label:has(input:checked){background:var(--berry-pale);border-color:var(--berry);color:#3f2d77}
+.resource{transition:transform .15s ease;background:linear-gradient(145deg,#fff,#fbfdfc)}
+.resource:hover{transform:translateY(-2px)}
+.resource:nth-child(2n){border-top:5px solid #86b6d7}.resource:nth-child(2n+1){border-top:5px solid #8bbd8e}
+.verdict{transition:.15s ease}.verdict:hover{transform:translateY(-2px)}
+.verdict:nth-child(1){background:#f1faef}.verdict:nth-child(2){background:#fff8dd}.verdict:nth-child(3){background:#f4efff}
+.verdict.selected{box-shadow:0 0 0 3px rgba(23,109,125,.12)}
+.review-list>div{border:1px solid var(--line);border-radius:15px;padding:.85rem 1rem;margin:.55rem 0;background:#fcfdfb}
+.journal-btn,.primary{background:linear-gradient(135deg,var(--accent),#31859a);box-shadow:0 5px 12px rgba(23,109,125,.16)}
+.journal-btn:hover,.primary:hover{filter:brightness(.96);transform:translateY(-1px)}
+.finish{background:linear-gradient(150deg,#fffefb 0%,#f6fff4 100%)}
+@media(prefers-reduced-motion:reduce){.choice,.resource,.verdict,.primary,.journal-btn{transition:none}.choice:hover,.resource:hover,.verdict:hover,.primary:hover,.journal-btn:hover{transform:none}}
