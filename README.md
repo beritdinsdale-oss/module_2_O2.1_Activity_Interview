@@ -52,3 +52,15 @@ the review screen and transferred to the Garden Journal.
 - More varied page treatments so the activity feels less like a form
 - Stronger visual hierarchy for choices, conversation prompts, evidence chips, resources, and results
 - Same accessibility-minded structure and same Garden Journal handoff
+
+
+## Revision 4 — illustrated field-notebook treatment
+This revision moves beyond the card/form look:
+- full field-notebook paper texture
+- botanical vines along the activity edges
+- richer page-specific backgrounds
+- taped-note, sticky-note, notebook-strip, and polaroid-like treatments
+- bigger, more varied visual compositions
+- serif display typography for a handcrafted field-journal feel
+- evidence choices displayed as colorful illustrated tiles
+- stronger visual variety from page to page

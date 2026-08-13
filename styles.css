@@ -105,3 +105,148 @@ select,textarea{box-shadow:inset 0 1px 2px rgba(30,55,60,.04)}
 .journal-btn:hover,.primary:hover{filter:brightness(.96);transform:translateY(-1px)}
 .finish{background:linear-gradient(150deg,#fffefb 0%,#f6fff4 100%)}
 @media(prefers-reduced-motion:reduce){.choice,.resource,.verdict,.primary,.journal-btn{transition:none}.choice:hover,.resource:hover,.verdict:hover,.primary:hover,.journal-btn:hover{transform:none}}
+
+/* ===== Illustrated field-notebook v4 ===== */
+:root{
+  --navy:#18396d; --ink2:#334f58; --cream2:#fff8e6; --paper2:#fffdf6;
+  --mauve:#7f5bb6; --sage:#9fbe8f; --tomato:#d96b4a; --marigold:#f2bd49;
+}
+body{
+  background:
+    linear-gradient(rgba(255,255,255,.6),rgba(255,255,255,.6)),
+    repeating-linear-gradient(0deg,rgba(71,102,105,.025) 0,rgba(71,102,105,.025) 1px,transparent 1px,transparent 5px),
+    linear-gradient(180deg,#f7fbff 0%,#fff9ec 53%,#f4faf1 100%);
+}
+.shell{position:relative}
+.floating-botanical{position:fixed;top:190px;width:92px;opacity:.55;pointer-events:none;z-index:0}
+.left-vine{left:1.2vw}.right-vine{right:1.2vw;transform:scaleX(-1)}
+.bot-stem{fill:none;stroke:#557f5b;stroke-width:5;stroke-linecap:round}
+.bot-leaf{fill:#94b98f}.bot-leaf2{fill:#c4d9a7}.bot-flower{fill:#d97881}.bot-flower2{fill:#9a7bc7}.bot-center{fill:#f1b942}
+.page{position:relative;z-index:1}
+.illustrated-page .card{
+  background:
+    linear-gradient(rgba(255,255,255,.93),rgba(255,255,255,.93)),
+    repeating-linear-gradient(0deg,transparent 0,transparent 28px,rgba(67,112,128,.045) 28px,rgba(67,112,128,.045) 29px);
+  border-radius:30px;
+  border:1px solid #dedfd3;
+  box-shadow:0 22px 55px rgba(55,80,85,.13);
+}
+.title-page .card{
+  background:
+    radial-gradient(circle at 90% 10%,rgba(255,211,90,.25),transparent 19rem),
+    radial-gradient(circle at 7% 88%,rgba(137,188,126,.20),transparent 17rem),
+    linear-gradient(145deg,#fffdf3,#f8fcff 68%,#f6fbef);
+}
+.title-page .card:after{
+  content:"";position:absolute;left:0;bottom:0;width:100%;height:38px;
+  background:linear-gradient(90deg,#c7ad79 0 4%,#8fa467 4% 8%,#c7ad79 8% 12%,#9f7f53 12% 16%,#c7ad79 16% 100%);
+  opacity:.22
+}
+.compare-page .card{background:linear-gradient(145deg,#fffdf8,#f3f8ff)}
+.path-page .card{background:linear-gradient(145deg,#fffdf8,#fbfff6)}
+.questions-page .card{background:linear-gradient(145deg,#fffaf0,#fffdf8)}
+.observation-page .card{background:linear-gradient(145deg,#fffdf8,#faf6ff)}
+.sources-page .card{background:linear-gradient(145deg,#f8fcff,#fffdf8)}
+.pattern-page .card{background:linear-gradient(145deg,#fffdf6,#f8fbff)}
+.comparison-page .card{background:linear-gradient(145deg,#fffdf6,#faf6ff)}
+.review-page .card{background:linear-gradient(145deg,#fffef8,#f6fbf4)}
+.journal-page .card{background:linear-gradient(145deg,#f8fff5,#fffdf2)}
+.card h1,.card h2{font-family:Georgia,"Times New Roman",serif;color:var(--navy);font-weight:700}
+.card h1{font-size:clamp(2.3rem,5.2vw,3.6rem)}
+.kicker{font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+.illustration{
+  border:none;
+  border-radius:24px;
+  background:transparent;
+  padding:0;
+  transform:none;
+  max-width:520px;
+}
+.hero-illustration{
+  background:linear-gradient(145deg,#eef8ef,#fff4cf);
+  padding:1rem;border:1px solid #dde7ce;border-radius:28px;
+  box-shadow:12px 12px 0 rgba(99,130,89,.11);
+}
+.illustration.small{
+  max-width:360px;
+  background:linear-gradient(145deg,#f7fbff,#fff8e7);
+  padding:.75rem;
+  border:1px solid #e4e2d5;
+  border-radius:24px;
+  box-shadow:7px 8px 0 rgba(91,72,130,.07);
+}
+.taped-note{position:relative;transform:rotate(-.4deg);box-shadow:4px 5px 0 rgba(100,83,53,.07)}
+.tape{
+  position:absolute;top:-11px;left:50%;transform:translateX(-50%) rotate(-2deg);
+  width:84px;height:24px;background:rgba(245,214,147,.62);border-left:1px solid rgba(169,136,74,.25);border-right:1px solid rgba(169,136,74,.25)
+}
+.sticky-note{position:relative;transform:rotate(.35deg)}
+.pushpin{position:absolute;right:18px;top:-10px;color:#d66f56;font-size:1.4rem;text-shadow:0 2px 0 #fff}
+.choice{
+  min-height:190px;
+  border-radius:26px;
+  position:relative;
+  overflow:hidden;
+}
+.choice:after{
+  content:"";position:absolute;width:90px;height:90px;border-radius:50%;right:-25px;bottom:-25px;background:rgba(255,255,255,.42)
+}
+.choice strong{font-size:1.16rem;color:var(--navy)}
+.question-list{display:grid;gap:.7rem}
+.question-list>div{
+  border-radius:18px;
+  box-shadow:3px 4px 0 rgba(95,112,107,.05);
+  transform:rotate(-.15deg);
+}
+.question-list>div:nth-child(even){transform:rotate(.18deg)}
+.evidence-fieldset{
+  background:linear-gradient(145deg,#fffdf5,#f5f9ff);
+  border:1px solid #dedfd5;border-radius:22px;padding:1.1rem;
+}
+.chips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem}
+.chips label{
+  border-radius:18px;padding:.9rem 1rem;min-height:72px;
+  box-shadow:3px 4px 0 rgba(81,109,112,.05);
+}
+.chips label:nth-child(1){background:#fff1ed}.chips label:nth-child(2){background:#eef8ff}
+.chips label:nth-child(3){background:#fff7d9}.chips label:nth-child(4){background:#eef4ff}
+.chips label:nth-child(5){background:#f1faed}.chips label:nth-child(6){background:#f6efff}
+.resource-grid{gap:1.1rem}
+.resource{
+  border-radius:22px;
+  box-shadow:5px 6px 0 rgba(72,98,102,.06);
+  padding:1.25rem;
+}
+.resource h3{font-family:Georgia,"Times New Roman",serif;color:var(--navy);font-size:1.25rem}
+.notebook-strip{
+  position:relative;
+  background:#f6f1ff;
+  border-left:9px solid #8b70c6;
+  box-shadow:4px 4px 0 rgba(93,72,130,.06)
+}
+.review-list>div{
+  background:#fffaf0;
+  box-shadow:4px 5px 0 rgba(78,105,94,.05);
+}
+.review-list>div:nth-child(even){background:#f2f8ff}
+.field-kit{
+  display:flex;align-items:center;gap:.8rem;margin-top:1.5rem;
+  padding:.75rem 1rem;border-top:1px dashed #d4c9a9;color:#6d6a58
+}
+.mini-pot,.mini-tool{font-size:1.5rem}.mini-note{
+  font-family:Georgia,"Times New Roman",serif;font-style:italic;background:#fff0b8;
+  padding:.3rem .65rem;transform:rotate(-2deg);box-shadow:2px 3px 0 rgba(90,70,40,.07)
+}
+.primary,.journal-btn{
+  border-radius:999px;
+  padding:.85rem 1.25rem;
+  background:linear-gradient(135deg,#256f54,#347f67);
+  box-shadow:0 7px 16px rgba(44,105,80,.18);
+}
+.secondary{border-radius:999px}
+.topbar strong{font-family:Georgia,"Times New Roman",serif;font-size:1.05rem}
+@media(max-width:1040px){.floating-botanical{display:none}}
+@media(max-width:720px){
+  .chips{grid-template-columns:1fr}
+  .illustration.small{max-width:300px}
+}
