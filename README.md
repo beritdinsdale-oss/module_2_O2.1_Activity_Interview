@@ -30,3 +30,17 @@ Upload these files directly to the repository root:
 - styles.css
 - app.js
 - README.md
+
+
+## Revision 2
+The observation-selection page now uses broader observation categories:
+- Temperature
+- Rainfall / precipitation
+- Dry periods / drought
+- Snow, frost, or winter conditions
+- Seasonal timing / growing season
+- Extreme weather
+- Other
+
+Selecting Other reveals a short fill-in field. The custom observation is also included in
+the review screen and transferred to the Garden Journal.

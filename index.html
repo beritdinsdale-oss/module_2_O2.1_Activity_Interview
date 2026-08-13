@@ -160,15 +160,19 @@
     <label for="observationSelect">Observation to investigate</label>
     <select id="observationSelect">
       <option value="">Choose one…</option>
-      <option value="hotter-summers">Summers seem hotter than they used to.</option>
-      <option value="milder-winters">Winters seem milder than they used to.</option>
-      <option value="less-snow">We seem to get less snow than we used to.</option>
-      <option value="rain-variable">Rainfall seems less predictable or more variable.</option>
-      <option value="drier">Dry periods or drought seem more common.</option>
-      <option value="heavier-rain">Heavy rain events seem more intense or more common.</option>
-      <option value="growing-season">The growing season or frost timing seems different.</option>
-      <option value="extreme-events">Extreme weather seems more common.</option>
+      <option value="temperature">Temperature seems different than it used to.</option>
+      <option value="precipitation">Rainfall or precipitation seems different than it used to.</option>
+      <option value="dryness">Dry periods or drought seem different than they used to.</option>
+      <option value="winter">Snow, frost, or winter conditions seem different than they used to.</option>
+      <option value="seasonal-timing">Seasonal timing or the growing season seems different than it used to.</option>
+      <option value="extreme-weather">Extreme weather seems different than it used to.</option>
+      <option value="other">Other observation</option>
     </select>
+
+    <div id="otherObservationWrap" class="field hidden">
+      <label for="otherObservation">Describe the observation you want to investigate</label>
+      <textarea id="otherObservation" rows="3" placeholder="Example: Spring seems to arrive earlier than it used to."></textarea>
+    </div>
 
     <fieldset class="evidence-fieldset">
       <legend>What evidence could help you check it?</legend>

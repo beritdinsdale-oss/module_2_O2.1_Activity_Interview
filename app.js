@@ -5,20 +5,19 @@ const STORAGE_KEY="climateMemoryEvidence.v7";
 let state={
   path:"",
   observation:"",
+  otherObservation:"",
   evidence:[],
   finding:"",
   verdict:""
 };
 
 const observationLabels={
-  "hotter-summers":"Summers seem hotter than they used to.",
-  "milder-winters":"Winters seem milder than they used to.",
-  "less-snow":"We seem to get less snow than we used to.",
-  "rain-variable":"Rainfall seems less predictable or more variable.",
-  "drier":"Dry periods or drought seem more common.",
-  "heavier-rain":"Heavy rain events seem more intense or more common.",
-  "growing-season":"The growing season or frost timing seems different.",
-  "extreme-events":"Extreme weather seems more common."
+  temperature:"Temperature seems different than it used to.",
+  precipitation:"Rainfall or precipitation seems different than it used to.",
+  dryness:"Dry periods or drought seem different than they used to.",
+  winter:"Snow, frost, or winter conditions seem different than they used to.",
+  "seasonal-timing":"Seasonal timing or the growing season seems different than it used to.",
+  "extreme-weather":"Extreme weather seems different than it used to."
 };
 
 const evidenceLabels={
@@ -103,6 +102,14 @@ document.querySelector("#copyReturn").addEventListener("click",async()=>{
 const observationSelect=document.querySelector("#observationSelect");
 observationSelect.addEventListener("change",()=>{
   state.observation=observationSelect.value;
+  const wrap=document.querySelector("#otherObservationWrap");
+  wrap.classList.toggle("hidden",state.observation!=="other");
+  saveLocal();
+  validateEvidencePage();
+});
+
+document.querySelector("#otherObservation").addEventListener("input",e=>{
+  state.otherObservation=e.target.value;
   saveLocal();
   validateEvidencePage();
 });
@@ -114,9 +121,15 @@ document.querySelectorAll('input[name="evidence"]').forEach(cb=>{
   });
 });
 function validateEvidencePage(){
-  document.querySelector("#evidenceNext").disabled=!(state.observation && state.evidence.length);
+  const observationReady=state.observation && (state.observation!=="other" || state.otherObservation.trim());
+  document.querySelector("#evidenceNext").disabled=!(observationReady && state.evidence.length);
 }
 document.querySelector("#evidenceNext").addEventListener("click",()=>showPage(5));
+
+function getObservationText(){
+  if(state.observation==="other") return state.otherObservation.trim() || "Other observation";
+  return observationLabels[state.observation] || "Your selected observation";
+}
 
 function filterResources(){
   const selected=new Set(state.evidence);
@@ -158,7 +171,7 @@ function updateComparisonReminder(){
     `<strong>Observation you are checking:</strong> ${observationLabels[state.observation]||"Your selected observation"}`;
 }
 function updateReview(){
-  document.querySelector("#reviewObservation").textContent=observationLabels[state.observation]||"";
+  document.querySelector("#reviewObservation").textContent=getObservationText();
   document.querySelector("#reviewEvidence").textContent=state.evidence.map(x=>evidenceLabels[x]).join(", ");
   document.querySelector("#reviewFinding").textContent=state.finding||"No pattern entered yet.";
   const v={supports:"Mostly supports the observation",mixed:"The picture is mixed",unclear:"Not enough evidence"};
@@ -175,7 +188,7 @@ function updateJournalHandoff(){
   const payload={
     version:2,
     source:"climate-memory-evidence",
-    observation:observationLabels[state.observation]||"",
+    observation:getObservationText(),
     finding:state.finding||"",
     verdict:state.verdict||""
   };
@@ -185,10 +198,12 @@ function updateJournalHandoff(){
 
 document.querySelector("#restart").addEventListener("click",()=>{
   localStorage.removeItem(STORAGE_KEY);
-  state={path:"",observation:"",evidence:[],finding:"",verdict:""};
+  state={path:"",observation:"",otherObservation:"",evidence:[],finding:"",verdict:""};
   document.querySelectorAll(".selected").forEach(x=>x.classList.remove("selected"));
   document.querySelectorAll('input[name="evidence"]').forEach(x=>x.checked=false);
   observationSelect.value="";
+  document.querySelector("#otherObservation").value="";
+  document.querySelector("#otherObservationWrap").classList.add("hidden");
   document.querySelector("#finding").value="";
   document.querySelector("#pathNext").disabled=true;
   document.querySelector("#evidenceNext").disabled=true;
@@ -203,6 +218,8 @@ function restoreUI(){
     document.querySelector("#pathNext").disabled=false;
   }
   observationSelect.value=state.observation||"";
+  document.querySelector("#otherObservation").value=state.otherObservation||"";
+  document.querySelector("#otherObservationWrap").classList.toggle("hidden",state.observation!=="other");
   document.querySelectorAll('input[name="evidence"]').forEach(cb=>cb.checked=state.evidence.includes(cb.value));
   document.querySelector("#finding").value=state.finding||"";
   if(state.verdict){
