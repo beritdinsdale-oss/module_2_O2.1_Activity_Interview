@@ -1,7 +1,7 @@
 const pages=[...document.querySelectorAll(".page")];
 let current=0;
 const STORAGE_KEY="climateMemoryEvidence.v11";
-let state={path:"",observation:"",otherObservation:"",patternAnswers:{},notes:"",finding:"",verdict:"",changed:""};
+let state={path:"",observation:"",patternAnswers:{},notes:"",finding:"",verdict:"",changed:""};
 
 const observationLabels={
   "summer-heat":"Summers seem hotter.",
@@ -83,17 +83,6 @@ const resourceGuides={
     ],
     clue:"<strong>Put the two dates together.</strong><span>An earlier last spring freeze and/or a later first fall freeze can lengthen the frost-free growing season.</span>"
   },
-  other:{
-    title:"Your observation", icon:"✏️", name:"NOAA Climate at a Glance",
-    url:"https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/",
-    steps:[
-      "Choose the geographic scale that best matches your observation. If a nearby city is available, choose <strong>City → City Time Series</strong>.",
-      "Choose the <strong>Parameter</strong> that most closely matches what you noticed.",
-      "Choose a <strong>Time Scale</strong> and <strong>Month</strong> that match the part of the year in the observation.",
-      "Use the longest historical period available and turn on <strong>Display Trend</strong> if the option is available.",
-      "If the available measure does not actually match your observation, choose <strong>I need more information</strong> later. That is a valid conclusion."
-    ]
-  }
 };
 
 const patternQuestions={
@@ -126,18 +115,14 @@ const patternQuestions={
     {id:"spring",q:"What has happened to the last spring freeze?",options:[["earlier","It is generally earlier"],["later","It is generally later"],["same","No clear change"],["unsure","I’m not sure"]]},
     {id:"fall",q:"What has happened to the first fall freeze?",options:[["earlier","It is generally earlier"],["later","It is generally later"],["same","No clear change"],["unsure","I’m not sure"]]},
     {id:"season",q:"Taken together, what might those frost dates mean for the frost-free growing season?",options:[["longer","It may be getting longer"],["shorter","It may be getting shorter"],["same","There is no clear change"],["unsure","I’m not sure"]]}
-  ],
-  other:[
-    {id:"direction",q:"What best describes the long-term pattern you found?",options:[["up","It generally increases over time"],["down","It generally decreases over time"],["flat","It stays relatively flat"],["unclear","There is no clear pattern / I’m not sure"]]},
-    {id:"recent",q:"How do recent years compare with earlier years?",options:[["higher","Generally higher"],["lower","Generally lower"],["similar","Generally similar"],["unclear","Too variable to tell"]]}
   ]
 };
 function answerLabel(question,value){const hit=question.options.find(o=>o[0]===value);return hit?hit[1]:value;}
-function getPatternSummary(){const qs=patternQuestions[state.observation]||patternQuestions.other;return qs.map(q=>`${q.q} ${answerLabel(q,state.patternAnswers[q.id]||"Not answered")}`).join("\n");}
-function patternComplete(){const qs=patternQuestions[state.observation]||patternQuestions.other;return qs.every(q=>state.patternAnswers[q.id]);}
+function getPatternSummary(){const qs=patternQuestions[state.observation]||[];return qs.map(q=>`${q.q} ${answerLabel(q,state.patternAnswers[q.id]||"Not answered")}`).join("\n");}
+function patternComplete(){const qs=patternQuestions[state.observation]||[];return qs.every(q=>state.patternAnswers[q.id]);}
 function saveLocal(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}
 function loadLocal(){try{const saved=JSON.parse(localStorage.getItem(STORAGE_KEY));if(saved)state={...state,...saved};}catch{}}
-function getObservationText(){return state.observation==="other"?(state.otherObservation.trim()||"Other observation"):(observationLabels[state.observation]||"Your selected observation");}
+function getObservationText(){return observationLabels[state.observation]||"Your selected observation";}
 function showPage(n,hash=true){
   current=Math.max(0,Math.min(pages.length-1,n));
   pages.forEach((p,i)=>p.classList.toggle("active",i===current));
@@ -172,21 +157,20 @@ document.querySelector("#imBack").addEventListener("click",()=>showPage(4));
 document.querySelector("#copyReturn").addEventListener("click",async()=>{const url=location.href.split("#")[0]+"#questions";try{await navigator.clipboard.writeText(url);document.querySelector("#copyStatus").textContent="Return link copied.";}catch{document.querySelector("#copyStatus").textContent="Copy this page address from your browser to return later.";}});
 
 const observationSelect=document.querySelector("#observationSelect");
-function validateObservation(){const ready=state.observation&&(state.observation!=="other"||state.otherObservation.trim());document.querySelector("#observationNext").disabled=!ready;}
-observationSelect.addEventListener("change",()=>{state.observation=observationSelect.value;document.querySelector("#otherObservationWrap").classList.toggle("hidden",state.observation!=="other");saveLocal();validateObservation();});
-document.querySelector("#otherObservation").addEventListener("input",e=>{state.otherObservation=e.target.value;saveLocal();validateObservation();});
+function validateObservation(){document.querySelector("#observationNext").disabled=!state.observation;}
+observationSelect.addEventListener("change",()=>{state.observation=observationSelect.value;state.patternAnswers={};saveLocal();validateObservation();});
 document.querySelector("#observationNext").addEventListener("click",()=>showPage(5));
-function renderFocusPage(){const g=resourceGuides[state.observation]||resourceGuides.other;document.querySelector("#focusIcon").textContent=g.icon||"🔎";document.querySelector("#focusObservation").textContent=getObservationText();}
+function renderFocusPage(){const g=resourceGuides[state.observation];document.querySelector("#focusIcon").textContent=g.icon||"🔎";document.querySelector("#focusObservation").textContent=getObservationText();}
 
 function renderResourceGuide(){
-  const g=resourceGuides[state.observation]||resourceGuides.other;
+  const g=resourceGuides[state.observation];
   document.querySelector("#resourceTitle").textContent="Use this resource to check your observation";
   document.querySelector("#resourceName").textContent=g.name;document.querySelector("#resourceLink").href=g.url;
   document.querySelector("#resourceSteps").innerHTML=g.steps.map((x,i)=>`<li><span>${i+1}</span><p>${x}</p></li>`).join("");
   const clue=document.querySelector("#resourceClue");clue.classList.toggle("hidden",!g.clue);clue.innerHTML=g.clue||"";
 }
 function renderPathwayQuestion(){
-  const qs=patternQuestions[state.observation]||patternQuestions.other;
+  const qs=patternQuestions[state.observation]||[];
   const wrap=document.querySelector("#patternQuestions");
   wrap.innerHTML=qs.map((q,qi)=>`<fieldset class="pattern-question"><legend>${qi+1}. ${q.q}</legend><div class="pattern-options">${q.options.map(o=>`<label><input type="radio" name="pattern_${q.id}" value="${o[0]}" ${state.patternAnswers[q.id]===o[0]?"checked":""}> <span>${o[1]}</span></label>`).join("")}</div></fieldset>`).join("");
   wrap.querySelectorAll('input[type="radio"]').forEach(r=>r.addEventListener("change",e=>{const id=e.target.name.replace("pattern_","");state.patternAnswers[id]=e.target.value;state.finding=getPatternSummary();saveLocal();validatePattern();}));
@@ -207,18 +191,18 @@ function validateComparison(){document.querySelector("#compareNext").disabled=!(
 document.querySelector("#compareNext").addEventListener("click",()=>showPage(9));
 function updateComparisonReminder(){document.querySelector("#observationReminder").innerHTML=`<strong>Observation you are checking:</strong> ${getObservationText()}`;}
 function updateReview(){
-  const g=resourceGuides[state.observation]||resourceGuides.other;
+  const g=resourceGuides[state.observation];
   document.querySelector("#reviewObservation").textContent=getObservationText();document.querySelector("#reviewResource").textContent=g.name;document.querySelector("#reviewFinding").textContent=getPatternSummary();document.querySelector("#reviewNotes").textContent=state.notes||"No notes added.";
   const v={supports:"The climate record generally supports the observation",mixed:"The climate record partly supports it, but the story is more complicated",unclear:"The climate record does not clearly support the observation","more-info":"I need more information to tell"};
   const c={yes:"Yes","a-little":"A little",no:"No","not-sure":"I’m not sure yet"};document.querySelector("#reviewVerdict").textContent=v[state.verdict]||"Not selected yet.";document.querySelector("#reviewChanged").textContent=c[state.changed]||"Not selected yet.";
 }
 function encodeHandoff(obj){const bytes=new TextEncoder().encode(JSON.stringify(obj));let binary="";bytes.forEach(b=>binary+=String.fromCharCode(b));return btoa(binary).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/g,"");}
-function updateJournalHandoff(){const qs=patternQuestions[state.observation]||patternQuestions.other;const structured=qs.map(q=>({question:q.q,answer:answerLabel(q,state.patternAnswers[q.id]||"Not answered")}));const finding=getPatternSummary()+(state.notes?`\n\nNotes: ${state.notes}`:"");const payload={version:3,source:"climate-memory-evidence",observation:getObservationText(),finding,patternAnswers:structured,notes:state.notes||"",verdict:state.verdict||"",changed:state.changed||""};document.querySelector("#journalHandoff").href=`https://beritdinsdale-oss.github.io/garden-observation-journal/#handoff=${encodeHandoff(payload)}`;}
+function updateJournalHandoff(){const qs=patternQuestions[state.observation]||[];const structured=qs.map(q=>({question:q.q,answer:answerLabel(q,state.patternAnswers[q.id]||"Not answered")}));const finding=getPatternSummary()+(state.notes?`\n\nNotes: ${state.notes}`:"");const payload={version:3,source:"climate-memory-evidence",observation:getObservationText(),finding,patternAnswers:structured,notes:state.notes||"",verdict:state.verdict||"",changed:state.changed||""};document.querySelector("#journalHandoff").href=`https://beritdinsdale-oss.github.io/garden-observation-journal/#handoff=${encodeHandoff(payload)}`;}
 
-document.querySelector("#restart").addEventListener("click",()=>{localStorage.removeItem(STORAGE_KEY);state={path:"",observation:"",otherObservation:"",patternAnswers:{},notes:"",finding:"",verdict:"",changed:""};document.querySelectorAll(".selected").forEach(x=>x.classList.remove("selected"));observationSelect.value="";document.querySelector("#otherObservation").value="";document.querySelector("#otherObservationWrap").classList.add("hidden");document.querySelector("#patternNotes").value="";document.querySelectorAll('input[name="changed"]').forEach(x=>x.checked=false);document.querySelector("#pathNext").disabled=true;document.querySelector("#observationNext").disabled=true;document.querySelector("#compareNext").disabled=true;showPage(0);});
+document.querySelector("#restart").addEventListener("click",()=>{localStorage.removeItem(STORAGE_KEY);state={path:"",observation:"",patternAnswers:{},notes:"",finding:"",verdict:"",changed:""};document.querySelectorAll(".selected").forEach(x=>x.classList.remove("selected"));observationSelect.value="";document.querySelector("#patternNotes").value="";document.querySelectorAll('input[name="changed"]').forEach(x=>x.checked=false);document.querySelector("#pathNext").disabled=true;document.querySelector("#observationNext").disabled=true;document.querySelector("#compareNext").disabled=true;showPage(0);});
 function restoreUI(){
   if(state.path){document.querySelector(`.choice[data-path="${state.path}"]`)?.classList.add("selected");document.querySelector("#pathNext").disabled=false;}
-  observationSelect.value=state.observation||"";document.querySelector("#otherObservation").value=state.otherObservation||"";document.querySelector("#otherObservationWrap").classList.toggle("hidden",state.observation!=="other");
+  if(!resourceGuides[state.observation]) state.observation=""; observationSelect.value=state.observation||"";
   if(state.verdict)document.querySelector(`.verdict[data-verdict="${state.verdict}"]`)?.classList.add("selected");if(state.changed)document.querySelector(`input[name="changed"][value="${state.changed}"]`)?.setAttribute("checked","checked");validateObservation();validateComparison();
 }
 function openHash(){const id=location.hash.slice(1),idx=pages.findIndex(p=>p.id===id);if(idx>=0){if(id==="questions")configureQuestionPage();showPage(idx,false);}else showPage(0,false);}
