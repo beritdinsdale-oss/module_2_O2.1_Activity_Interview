@@ -205,7 +205,6 @@
     <p class="kicker">🧭 Check the climate record</p>
     <div class="resource-heading guided-resource-heading">
       <div><span class="tag">Your resource</span><h2 id="resourceName"></h2></div>
-      <a id="resourceLink" class="resource-button" href="#" target="_blank" rel="noopener">Open resource ↗</a>
     </div>
 
     <div class="guided-progress" aria-live="polite"><span id="guideStepLabel"></span></div>
@@ -264,6 +263,16 @@
     <h2>Memory, meet the climate record</h2>
     <p id="observationReminder" class="selected-summary"></p>
 
+    <div class="evidence-companion" aria-labelledby="evidenceCompanionTitle">
+      <div class="evidence-companion-head">
+        <span aria-hidden="true">📋</span>
+        <div><span class="tag">Your evidence</span><h3 id="evidenceCompanionTitle">What you recorded</h3></div>
+      </div>
+      <div id="comparisonEvidence" class="evidence-answer-list"></div>
+      <div id="comparisonNotesWrap" class="evidence-notes hidden"><strong>Your notes</strong><p id="comparisonNotes"></p></div>
+    </div>
+
+    <h3 class="comparison-question">Based on the evidence above, how well does the climate record support the observation?</h3>
     <div class="verdict-grid">
       <button class="verdict" data-verdict="supports"><span>✓</span><strong>Generally supports it</strong><small>The long-term record shows a similar pattern.</small></button>
       <button class="verdict" data-verdict="mixed"><span>↔</span><strong>Partly supports it</strong><small>The pattern is there, but the story is more complicated.</small></button>

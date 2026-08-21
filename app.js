@@ -69,6 +69,16 @@ function saveLocal(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}
 function loadLocal(){try{const saved=JSON.parse(localStorage.getItem(STORAGE_KEY));if(saved)state={...state,...saved};}catch{}}
 function getObservationText(){return observationLabels[state.observation]||'Your selected observation';}
 
+function stepNeedsResource(step){
+  if(!step) return false;
+  if(state.observation==='precipitation' && step.question?.id==='rainSeason') return false;
+  if(state.observation==='growing-season' && step.question?.id==='season') return false;
+  return true;
+}
+function resourceActionHTML(resource){
+  return `<div class="resource-action"><div class="resource-action-label"><span aria-hidden="true">🌐</span><div><strong>OPEN</strong><small>Open the climate resource in a new tab. This activity will stay open here.</small></div></div><a class="resource-button resource-button-large" href="${resource.url}" target="_blank" rel="noopener">Open ${resource.name} ↗</a></div>`;
+}
+
 function showPage(n,hash=true){
   current=Math.max(0,Math.min(pages.length-1,n));
   pages.forEach((p,i)=>p.classList.toggle('active',i===current));
@@ -113,12 +123,13 @@ function renderGuidedStep(){
   state.guideStep=Math.max(0,Math.min(state.guideStep||0,steps.length-1));
   const step=steps[state.guideStep];
   document.querySelector('#resourceName').textContent=resource.name;
-  document.querySelector('#resourceLink').href=resource.url;
   document.querySelector('#guideStepLabel').textContent=`Step ${state.guideStep+1} of ${steps.length}`;
   const instruction=typeof step.instruction==='function'?step.instruction():step.instruction;
-  let html=`<h3>${step.title}</h3><div class="guided-instruction">${instruction}</div>`;
+  let html=`<h3>${step.title}</h3>`;
+  if(stepNeedsResource(step)) html+=resourceActionHTML(resource);
+  html+=`<div class="guided-section-label"><span aria-hidden="true">⚙️</span><strong>SET</strong></div><div class="guided-instruction">${instruction}</div>`;
   if(step.question){
-    html+=`<div class="guided-question"><fieldset><legend>${step.question.q}</legend><div class="guided-options">${step.question.options.map(o=>`<label><input type="radio" name="guided_${step.question.id}" value="${o[0]}" ${state.patternAnswers[step.question.id]===o[0]?'checked':''}> <span>${o[1]}</span></label>`).join('')}</div></fieldset></div>`;
+    html+=`<div class="guided-question"><div class="guided-section-label answer-label"><span aria-hidden="true">✏️</span><strong>ANSWER</strong></div><fieldset><legend>${step.question.q}</legend><div class="guided-options">${step.question.options.map(o=>`<label><input type="radio" name="guided_${step.question.id}" value="${o[0]}" ${state.patternAnswers[step.question.id]===o[0]?'checked':''}> <span>${o[1]}</span></label>`).join('')}</div></fieldset></div>`;
   }
   document.querySelector('#guidedStep').innerHTML=html;
   document.querySelectorAll('#guidedStep input[type="radio"]').forEach(r=>r.addEventListener('change',e=>{const id=e.target.name.replace('guided_','');state.patternAnswers[id]=e.target.value;state.finding=getPatternSummary();saveLocal();renderGuidedNav();}));
@@ -143,7 +154,15 @@ document.querySelectorAll('.verdict').forEach(btn=>btn.addEventListener('click',
 document.querySelectorAll('input[name="changed"]').forEach(r=>r.addEventListener('change',e=>{state.changed=e.target.value;saveLocal();validateComparison();}));
 function validateComparison(){document.querySelector('#compareNext').disabled=!(state.verdict&&state.changed);}
 document.querySelector('#compareNext').addEventListener('click',()=>showPageById('journal'));
-function updateComparisonReminder(){document.querySelector('#observationReminder').innerHTML=`<strong>Observation you checked:</strong> ${getObservationText()}`;}
+function updateComparisonReminder(){
+  document.querySelector('#observationReminder').innerHTML=`<strong>Observation you checked:</strong> ${getObservationText()}`;
+  const container=document.querySelector('#comparisonEvidence');
+  const rows=allQuestions().map(x=>`<div class="evidence-answer"><span class="evidence-q">${x.q}</span><strong>${answerLabel(x,state.patternAnswers[x.id]||'Not answered')}</strong></div>`).join('');
+  container.innerHTML=rows;
+  const notesWrap=document.querySelector('#comparisonNotesWrap');
+  const notes=document.querySelector('#comparisonNotes');
+  if(state.notes){notes.textContent=state.notes;notesWrap.classList.remove('hidden');}else{notes.textContent='';notesWrap.classList.add('hidden');}
+}
 function updateReview(){
   const resource=resources[state.observation];
   document.querySelector('#reviewObservation').textContent=getObservationText();
