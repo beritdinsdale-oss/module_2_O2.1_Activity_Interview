@@ -199,64 +199,53 @@
   <div class="navrow"><button class="secondary back">← Back</button><button id="observationNext" class="primary" type="button" disabled>Show me how to check it →</button></div>
 </section>
 
-<!-- PAGE 6 -->
-<section class="page illustrated-page focus-page" data-page="5" id="focus">
-  <div class="card focus-card">
-    <p class="kicker">🔎 One observation</p>
-    <h2>You’re checking</h2>
-    <div class="observation-hero"><span id="focusIcon" aria-hidden="true">🌡️</span><strong id="focusObservation"></strong></div>
-    <p class="focus-simple">Next, set up a climate record that matches this observation.</p>
-  </div>
-  <div class="navrow"><button class="secondary back">← Back</button><button class="primary" type="button" data-target="sources">Show me how to check it →</button></div>
-</section>
-
-<!-- PAGE 8 -->
+<!-- GUIDED RESOURCE CHECK -->
 <section class="page illustrated-page sources-page" data-page="6" id="sources">
-  <div class="card">
+  <div class="card guided-card">
     <p class="kicker">🧭 Check the climate record</p>
-    <h2 id="resourceTitle">Use this resource</h2>
-    <p class="resource-intro-short">Follow the settings below. You do not need to learn the whole tool—just use it to answer your question.</p>
-    <article class="resource-guide compact-guide">
-      <div class="resource-heading">
-        <div><span class="tag">Your resource</span><h3 id="resourceName"></h3></div>
-        <a id="resourceLink" class="resource-button" href="#" target="_blank" rel="noopener">Open resource ↗</a>
-      </div>
-      <div class="guide-steps single-guide">
-        <h3>Set up the resource</h3>
-        <ol id="resourceSteps"></ol>
-        <div id="resourceClue" class="mini-clue hidden"></div>
-      </div>
-    </article>
+    <div class="resource-heading guided-resource-heading">
+      <div><span class="tag">Your resource</span><h2 id="resourceName"></h2></div>
+      <a id="resourceLink" class="resource-button" href="#" target="_blank" rel="noopener">Open resource ↗</a>
+    </div>
+
+    <div class="guided-progress" aria-live="polite"><span id="guideStepLabel"></span></div>
+    <div id="guidedStep" class="guided-step"></div>
+
+    <div id="guidedNotes" class="notes-box hidden">
+      <label for="patternNotes"><strong>Optional notes</strong></label>
+      <p>Add anything else you want to remember from the graph or resource.</p>
+      <textarea id="patternNotes" rows="4" placeholder="Add notes if you’d like…"></textarea>
+    </div>
+    <p class="journal-inline-note">📓 Each answer you select here will be carried into your Garden Journal.</p>
   </div>
-  <div class="navrow"><button class="secondary back">← Back</button><button class="primary" type="button" data-target="pattern">I checked the record →</button></div>
+  <div class="navrow">
+    <button id="guidedBack" class="secondary" type="button">← Back</button>
+    <button id="guidedNext" class="primary" type="button">Next →</button>
+  </div>
 </section>
 
-<!-- PAGE 8 -->
-<section class="page illustrated-page pattern-page" data-page="7" id="pattern">
+<!-- PAGE 10 -->
+<section class="page illustrated-page review-page" data-page="9" id="review">
   <div class="card">
     <div class="illustration small" aria-hidden="true"><span class="sparkle">✦</span>
       <svg viewBox="0 0 340 180">
-        <path d="M55 139V40M55 139h230" class="ill-axis"/>
-        <path d="M68 128l37-12 32 4 35-25 32 5 34-31 30-5" class="ill-curve"/>
-        <circle cx="105" cy="116" r="6" class="ill-dot"/>
-        <circle cx="172" cy="95" r="6" class="ill-dot"/>
-        <circle cx="238" cy="69" r="6" class="ill-dot"/>
+        <rect x="70" y="34" width="200" height="112" rx="18" class="ill-paper"/>
+        <path d="M101 68h108M101 95h138M101 122h88" class="ill-line"/>
+        <circle cx="245" cy="66" r="15" class="ill-check"/>
+        <path d="M237 66l6 6 11-13" class="ill-checkmark"/>
       </svg>
     </div>
-    <p class="kicker">📈 Your turn to read the story</p>
-    <h2>What does the long-term record show?</h2>
-
-    <p class="journal-inline-note">📓 Your answers and optional notes will be added to your Garden Journal.</p>
-
-    <div id="patternQuestions" class="pattern-questions"></div>
-
-    <div class="notes-box">
-      <label for="patternNotes"><strong>Optional notes</strong></label>
-      <p>Jot down anything you want to remember about the graph, your choices, or something you found surprising.</p>
-      <textarea id="patternNotes" rows="4" placeholder="Add notes if you’d like…"></textarea>
+    <p class="kicker">✨ Nice work</p>
+    <h2>Here’s what you found in the climate record</h2>
+    <div class="review-list">
+      <div><strong>Observation</strong><p id="reviewObservation"></p></div>
+      <div><strong>Resource used</strong><p id="reviewResource"></p></div>
+      <div><strong>What you found</strong><p id="reviewFinding" class="preline"></p></div>
+      <div><strong>Your notes</strong><p id="reviewNotes"></p></div>
     </div>
+    <p class="help">Take a quick look at the evidence you recorded. Next, you’ll step back and decide what it means for the original observation.</p>
   </div>
-  <div class="navrow"><button class="secondary back">← Back</button><button id="patternNext" class="primary" type="button" data-target="comparison" disabled>Compare with the observation →</button></div>
+  <div class="navrow"><button class="secondary" type="button" data-target="sources">← Back to my answers</button><button class="primary" type="button" data-target="comparison">What does this mean? →</button></div>
 </section>
 
 <!-- PAGE 9 -->
@@ -292,33 +281,7 @@
       </div>
     </fieldset>
   </div>
-  <div class="navrow"><button class="secondary back">← Back</button><button id="compareNext" class="primary" disabled>Review my result →</button></div>
-</section>
-
-<!-- PAGE 10 -->
-<section class="page illustrated-page review-page" data-page="9" id="review">
-  <div class="card">
-    <div class="illustration small" aria-hidden="true"><span class="sparkle">✦</span>
-      <svg viewBox="0 0 340 180">
-        <rect x="70" y="34" width="200" height="112" rx="18" class="ill-paper"/>
-        <path d="M101 68h108M101 95h138M101 122h88" class="ill-line"/>
-        <circle cx="245" cy="66" r="15" class="ill-check"/>
-        <path d="M237 66l6 6 11-13" class="ill-checkmark"/>
-      </svg>
-    </div>
-    <p class="kicker">✨ Nice work</p>
-    <h2>Here’s the story you uncovered</h2>
-    <div class="review-list">
-      <div><strong>Observation</strong><p id="reviewObservation"></p></div>
-      <div><strong>Resource used</strong><p id="reviewResource"></p></div>
-      <div><strong>What you found</strong><p id="reviewFinding" class="preline"></p></div>
-      <div><strong>Your notes</strong><p id="reviewNotes"></p></div>
-      <div><strong>Comparison</strong><p id="reviewVerdict"></p></div>
-      <div><strong>Did the data shift your thinking?</strong><p id="reviewChanged"></p></div>
-    </div>
-    <p class="help">Take a quick look. Want to tweak something? You can hop back before you save it.</p>
-  </div>
-  <div class="navrow"><button class="secondary back">← Back</button><button class="primary" type="button" data-target="journal">Save to my journal →</button></div>
+  <div class="navrow"><button class="secondary" type="button" data-target="review">← Back to my summary</button><button id="compareNext" class="primary" disabled>Save to my journal →</button></div>
 </section>
 
 <!-- PAGE 10 -->
@@ -347,6 +310,6 @@
 </section>
 
 </main>
-<script src="app.js?v=11"></script>
+<script src="app.js?v=12"></script>
 </body>
 </html>
