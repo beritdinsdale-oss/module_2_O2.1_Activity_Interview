@@ -269,3 +269,18 @@ body{
 .radio-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem;margin-top:.5rem}
 .radio-row label{background:#fff;border:1px solid #dedfd5;border-radius:14px;padding:.75rem;cursor:pointer}
 @media(max-width:720px){.radio-row{grid-template-columns:1fr}.resource-heading{align-items:flex-start}}
+
+/* v10: quieter interpretation page */
+.focus-simple{font-size:1.15rem;text-align:center;margin:1.1rem auto .25rem;max-width:42rem;color:var(--ink-soft)}
+.single-guide{max-width:760px;margin:0 auto}.pattern-questions{display:grid;gap:1.1rem;margin:1.25rem 0}
+.pattern-question{border:1px solid #ddd6c8;border-radius:18px;padding:1rem 1.1rem;background:#fff;margin:0}
+.pattern-question legend{font-weight:800;padding:0 .35rem;line-height:1.35}
+.pattern-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem;margin-top:.65rem}
+.pattern-options label{display:flex;gap:.6rem;align-items:flex-start;padding:.8rem .9rem;border:1px solid #e4dfd5;border-radius:14px;background:#fffdf8;cursor:pointer}
+.pattern-options input{margin-top:.22rem;accent-color:var(--accent)}
+.notes-box{margin-top:1.5rem;padding:1rem 1.1rem;border-radius:18px;background:#f7f2e8;border:1px dashed #cbbda5}
+.notes-box p{margin:.25rem 0 .7rem;color:var(--ink-soft);font-size:.96rem}.notes-box textarea{width:100%;box-sizing:border-box}
+.preline{white-space:pre-line}
+@media(max-width:720px){.pattern-options{grid-template-columns:1fr}}
+
+.journal-inline-note{font-size:.95rem;margin:.4rem 0 1rem;color:#4b6257;font-weight:700}

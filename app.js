@@ -1,7 +1,7 @@
 const pages=[...document.querySelectorAll(".page")];
 let current=0;
-const STORAGE_KEY="climateMemoryEvidence.v8";
-let state={path:"",observation:"",otherObservation:"",finding:"",verdict:"",changed:""};
+const STORAGE_KEY="climateMemoryEvidence.v11";
+let state={path:"",observation:"",otherObservation:"",patternAnswers:{},notes:"",finding:"",verdict:"",changed:""};
 
 const observationLabels={
   "summer-heat":"Summers seem hotter.",
@@ -14,78 +14,127 @@ const observationLabels={
 
 const resourceGuides={
   "summer-heat":{
-    title:"Summers seem hotter",
-    icon:"🌡️", focus:"Across many years, are recent summers generally warmer than earlier summers, or is there no clear long-term change?",
-    intro:"A hot summer or two does not necessarily tell us whether climate has changed. A long-term temperature record lets us compare many summers and look for a pattern.",
-    name:"NOAA Climate at a Glance",
+    title:"Summers seem hotter", icon:"🌡️", name:"NOAA Climate at a Glance",
     url:"https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/",
-    steps:["From the Climate at a Glance home page, choose <strong>City</strong>, then <strong>City Time Series</strong>.","Choose your <strong>State</strong> and the nearest available <strong>City</strong>.","Set <strong>Parameter → Average Temperature</strong>, <strong>Time Scale → 3-Month</strong>, and <strong>Month → August</strong>.","Set <strong>Start Year</strong> to the earliest available year and <strong>End Year</strong> to the most recent available year."],
-    look:"Look across the whole record rather than focusing on one unusually hot or cool summer. Is the overall pattern moving upward, downward, or staying fairly level? How much do individual summers bounce around that pattern?",
-    question:"How large is the long-term change compared with the year-to-year variation you see?"
+    steps:[
+      "On the Climate at a Glance home page, choose <strong>City</strong>, then choose <strong>City Time Series</strong>.",
+      "For <strong>State</strong>, choose your state. For <strong>City</strong>, choose the available city closest to the place in your observation.",
+      "For <strong>Parameter</strong>, choose <strong>Average Temperature</strong>.",
+      "For <strong>Time Scale</strong>, choose <strong>3-Month</strong>. For <strong>Month</strong>, choose <strong>August</strong>. Together, these settings show June–July–August.",
+      "For <strong>Start Year</strong>, choose the earliest year available. For <strong>End Year</strong>, choose the most recent year available.",
+      "If <strong>Display Trend</strong> is available, turn it on. Then use the graph to answer the questions on the next page."
+    ]
   },
   "winter-warmth":{
-    title:"Winters seem warmer",
-    icon:"❄️", focus:"Across many years, are recent winters generally warmer than earlier winters, or is there no clear long-term change?",
-    intro:"Winter weather can swing dramatically from year to year. Looking across decades helps us see whether average winter temperature has changed underneath those ups and downs.",
-    name:"NOAA Climate at a Glance",
+    title:"Winters seem warmer", icon:"❄️", name:"NOAA Climate at a Glance",
     url:"https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/",
-    steps:["From the Climate at a Glance home page, choose <strong>City</strong>, then <strong>City Time Series</strong>.","Choose your <strong>State</strong> and the nearest available <strong>City</strong>.","Set <strong>Parameter → Average Temperature</strong>, <strong>Time Scale → 3-Month</strong>, and <strong>Month → February</strong>.","Set <strong>Start Year</strong> to the earliest available year and <strong>End Year</strong> to the most recent available year."],
-    look:"Are recent winters generally warmer than earlier winters? Notice both the long-term direction and the large year-to-year swings that can still occur.",
-    question:"Does the long-term winter pattern stand out even though individual winters vary?"
+    steps:[
+      "On the Climate at a Glance home page, choose <strong>City</strong>, then choose <strong>City Time Series</strong>.",
+      "Choose your <strong>State</strong> and the available <strong>City</strong> closest to the place in your observation.",
+      "For <strong>Parameter</strong>, choose <strong>Average Temperature</strong>.",
+      "For <strong>Time Scale</strong>, choose <strong>3-Month</strong>. For <strong>Month</strong>, choose <strong>February</strong>. This gives the winter period ending in February (December–January–February).",
+      "Choose the earliest available <strong>Start Year</strong> and the most recent available <strong>End Year</strong>.",
+      "If <strong>Display Trend</strong> is available, turn it on. Then answer the winter-pattern questions on the next page."
+    ]
   },
   precipitation:{
-    title:"Rainfall seems different",
-    icon:"🌧️", focus:"For the season connected to the observation, has precipitation changed across many years, or does it mostly vary from year to year?",
-    intro:"Rainfall can change in more than one way. We’ll start by looking at whether seasonal precipitation totals have changed over time.",
-    name:"NOAA Climate at a Glance",
+    title:"Rainfall seems different", icon:"🌧️", name:"NOAA Climate at a Glance",
     url:"https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/",
-    steps:["From the Climate at a Glance home page, choose <strong>City</strong>, then <strong>City Time Series</strong>.","Choose your <strong>State</strong> and nearest available <strong>City</strong>. Set <strong>Parameter → Precipitation</strong>.","Match the season: <strong>Winter → 3-Month + February</strong>; <strong>Spring → 3-Month + May</strong>; <strong>Summer → 3-Month + August</strong>; <strong>Fall → 3-Month + November</strong>.","Set <strong>Start Year</strong> to the earliest available year and <strong>End Year</strong> to the most recent available year."],
-    look:"Does seasonal precipitation show a long-term direction, or mostly large swings from year to year? Compare recent decades with earlier parts of the record.",
-    clue:"<strong>🌧️ A useful clue</strong><span>A garden can feel “drier” even when total precipitation has not changed very much. When rain falls—and how it is distributed through the season—also matters.</span>",
-    question:"Does the total amount appear to be changing, or is year-to-year variability the stronger feature?"
+    steps:[
+      "On the Climate at a Glance home page, choose <strong>City</strong>, then choose <strong>City Time Series</strong>.",
+      "Choose your <strong>State</strong> and the available <strong>City</strong> closest to the place in your observation.",
+      "For <strong>Parameter</strong>, choose <strong>Precipitation</strong>.",
+      "Choose the season that best matches the memory: <strong>Winter = 3-Month + February</strong>; <strong>Spring = 3-Month + May</strong>; <strong>Summer = 3-Month + August</strong>; <strong>Fall = 3-Month + November</strong>.",
+      "Choose the earliest available <strong>Start Year</strong> and the most recent available <strong>End Year</strong>.",
+      "If <strong>Display Trend</strong> is available, turn it on. Remember: this graph shows seasonal precipitation totals, not how evenly rain was distributed within the season."
+    ]
   },
   drought:{
-    title:"Drought seems more common or severe",
-    icon:"☀️", focus:"Across the historical record, do droughts appear to be becoming more frequent or severe, or has drought recurred throughout the record?",
-    intro:"Drought is more complicated than simply receiving less rain. This historical tool lets you compare dry periods across time for a state or county.",
-    name:"Drought.gov Historical Drought Data & Conditions Tool",
+    title:"Drought seems more common or severe", icon:"☀️", name:"Drought.gov Historical Drought Data & Conditions Tool",
     url:"https://www.drought.gov/data-maps-tools/historical-drought-data-conditions-tool",
-    steps:["Choose your state or county as the area you want to examine.","Start with a historical time series rather than only the current drought map.","Use the Standardized Precipitation Index (SPI) if you want the longest instrumental precipitation-based record; it extends back to 1895.","Look across the graph for repeated dry periods and compare more recent periods with earlier ones."],
-    look:"Are severe dry periods concentrated in particular decades? Do recent dry periods look unusual compared with earlier parts of the record, or has drought appeared repeatedly throughout the record?",
-    question:"Does the record suggest a change in drought frequency or severity, or a long history of recurring drought?"
+    steps:[
+      "Open the Historical Drought Data & Conditions Tool and choose the <strong>state or county</strong> that best matches the place in your observation.",
+      "Use the <strong>Standardized Precipitation Index (SPI)</strong> panel for the longest instrumental precipitation-based drought record. SPI extends back to 1895.",
+      "Set the graph to show as much of the available historical record as possible rather than only recent years.",
+      "Read across the time series from earlier to later years. Use the questions on the next page to compare how often dry periods occur and how severe they appear."
+    ]
   },
   "extreme-heat":{
-    title:"Extreme heat seems more common",
-    icon:"🔥", focus:"Across many years, are very hot days becoming more common at this location?",
-    intro:"Average summer temperature and extreme heat are related, but they are not the same question. EPA’s climate indicators let you look specifically at unusually hot conditions and heat waves.",
-    name:"Climate Toolbox — Historical Climate Tracker",
+    title:"Extreme heat seems more common", icon:"🔥", name:"Climate Toolbox — Historical Climate Tracker",
     url:"https://climatetoolbox.org/tool/Historical-Climate-Tracker",
-    steps:["Open the Historical Climate Tracker and set the map to your location.","Choose an annual heat metric, such as days with heat index above 90°F, 95°F, 100°F, or 105°F. Pick a threshold that makes sense for your location.","Display the historical graph and trend line.","Look from 1979 to the present and compare recent years with the earlier part of the record."],
-    look:"Are high-heat days becoming more common at your location? Notice the long-term direction, but also the large differences that can occur from one year to the next.",
-    question:"What does the local record suggest about how often very hot conditions occur over time?"
+    steps:[
+      "Under <strong>Choose Location</strong>, select <strong>Point Location</strong>. Enter a place name or click/drag the map marker, then choose <strong>SET LOCATION</strong>.",
+      "Open <strong>Choose Data</strong>. Set <strong>Calendar Time Period</strong> to an annual summary so each point or bar represents one year.",
+      "In <strong>Variable</strong>, choose a heat metric that counts very hot days if one is available for your location. Use the same threshold for the whole record.",
+      "Under <strong>Change Graph</strong>, turn on <strong>Add Best-Fit Line</strong> if available.",
+      "Use the graph from 1979 to the present. On the next page, answer the questions about whether high-heat days are becoming more common and how much they vary from year to year."
+    ],
+    clue:"<strong>Why 1979?</strong><span>The Historical Climate Tracker uses gridMET data for the contiguous United States beginning in 1979.</span>"
   },
   "growing-season":{
-    title:"The growing season or frost timing seems different",
-    icon:"🌱", focus:"Across many years, is the last spring freeze shifting earlier and/or the first fall freeze shifting later?",
-    intro:"For this climate indicator, the frost-free growing season is the time between the last spring frost and the first fall frost. That gives us a consistent way to compare seasons over time.",
-    name:"Climate Toolbox — Historical Climate Tracker",
+    title:"The growing season or frost timing seems different", icon:"🌱", name:"Climate Toolbox — Historical Climate Tracker",
     url:"https://climatetoolbox.org/tool/Historical-Climate-Tracker",
-    steps:["Open the <strong>Historical Climate Tracker</strong> and select your location on the map.","Choose <strong>Last Spring Freeze</strong>. Look across the graph: is the date generally shifting earlier, later, or showing no clear pattern?","Next choose <strong>First Fall Freeze</strong>. Is that date generally shifting earlier, later, or showing no clear pattern?","Put the two clues together: an earlier last spring freeze and/or a later first fall freeze can lengthen the frost-free growing season."],
-    look:"Is the frost-free season getting longer, shorter, or staying about the same? If it is changing, does the record point to an earlier last spring freeze, a later first fall freeze, or both?",
-    question:"If the growing season is changing, what part of the frost-free season seems to be contributing to that change?"
+    steps:[
+      "Under <strong>Choose Location</strong>, select <strong>Point Location</strong>. Enter a place name or click/drag the map marker, then choose <strong>SET LOCATION</strong>.",
+      "Open <strong>Choose Data</strong> and use an <strong>annual summary</strong> time period.",
+      "In <strong>Variable</strong>, choose <strong>Last Spring Freeze</strong>. View the graph and note whether the date tends to be earlier, later, or shows no clear change.",
+      "Return to <strong>Variable</strong> and choose <strong>First Fall Freeze</strong>. Again, note whether the date tends to be earlier, later, or shows no clear change.",
+      "If available, turn on <strong>Add Best-Fit Line</strong>. Then answer the frost-timing questions on the next page."
+    ],
+    clue:"<strong>Put the two dates together.</strong><span>An earlier last spring freeze and/or a later first fall freeze can lengthen the frost-free growing season.</span>"
   },
   other:{
-    title:"Your observation",
-    icon:"✏️", focus:"Across many years, does the climate measure that best matches your observation show a clear long-term pattern?",
-    intro:"Your observation does not fit neatly into one of our pathways, so start with a broad climate-data tool and choose the measure that most closely matches what you noticed.",
-    name:"NOAA Climate at a Glance",
+    title:"Your observation", icon:"✏️", name:"NOAA Climate at a Glance",
     url:"https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/",
-    steps:["Choose the local area closest to the place in your observation.","Choose the climate measure that most closely matches what you noticed.","Choose a season or time period that matches the observation.","Use a long historical record and look for the overall pattern rather than one unusual year."],
-    look:"Ask whether the resource actually measures the thing you remembered. If it only answers part of your question, that is a useful finding too.",
-    question:"How well does the measure you found match the observation you wanted to investigate?"
+    steps:[
+      "Choose the geographic scale that best matches your observation. If a nearby city is available, choose <strong>City → City Time Series</strong>.",
+      "Choose the <strong>Parameter</strong> that most closely matches what you noticed.",
+      "Choose a <strong>Time Scale</strong> and <strong>Month</strong> that match the part of the year in the observation.",
+      "Use the longest historical period available and turn on <strong>Display Trend</strong> if the option is available.",
+      "If the available measure does not actually match your observation, choose <strong>I need more information</strong> later. That is a valid conclusion."
+    ]
   }
 };
 
+const patternQuestions={
+  "summer-heat":[
+    {id:"recent",q:"Compared with earlier summers, recent summers are generally…",options:[["warmer","Warmer"],["cooler","Cooler"],["same","About the same"],["unclear","Too variable to see a clear difference"]]},
+    {id:"trend",q:"What does the long-term trend show?",options:[["up","Temperatures trend upward"],["down","Temperatures trend downward"],["flat","The trend is relatively flat"],["unsure","I’m not sure"]]},
+    {id:"variability",q:"How much do individual summers vary from year to year?",options:[["lots","Quite a bit"],["little","Not very much"],["unsure","I’m not sure"]]}
+  ],
+  "winter-warmth":[
+    {id:"recent",q:"Compared with earlier winters, recent winters are generally…",options:[["warmer","Warmer"],["cooler","Cooler"],["same","About the same"],["unclear","Too variable to see a clear difference"]]},
+    {id:"trend",q:"What does the long-term trend show?",options:[["up","Temperatures trend upward"],["down","Temperatures trend downward"],["flat","The trend is relatively flat"],["unsure","I’m not sure"]]},
+    {id:"variability",q:"How much do individual winters vary from year to year?",options:[["lots","Quite a bit"],["little","Not very much"],["unsure","I’m not sure"]]}
+  ],
+  precipitation:[
+    {id:"recent",q:"Compared with earlier years, precipitation in the season you checked is generally…",options:[["higher","Higher"],["lower","Lower"],["same","About the same"],["unclear","Too variable to see a clear difference"]]},
+    {id:"trend",q:"What does the long-term trend show?",options:[["up","Precipitation trends upward"],["down","Precipitation trends downward"],["flat","The trend is relatively flat"],["unsure","I’m not sure"]]},
+    {id:"variability",q:"How much does precipitation vary from year to year?",options:[["lots","Quite a bit"],["little","Not very much"],["unsure","I’m not sure"]]}
+  ],
+  drought:[
+    {id:"frequency",q:"Compared with earlier parts of the record, recent drought conditions appear…",options:[["more","More frequent"],["less","Less frequent"],["similar","About as frequent"],["unclear","No clear pattern / I’m not sure"]]},
+    {id:"severity",q:"What do you notice about drought severity?",options:[["more","Recent droughts appear more severe"],["less","Recent droughts appear less severe"],["similar","Severity looks similar across the record"],["unclear","No clear pattern / I’m not sure"]]},
+    {id:"history",q:"Does the record show drought occurring throughout the historical period?",options:[["yes","Yes"],["no","No"],["unsure","I’m not sure"]]}
+  ],
+  "extreme-heat":[
+    {id:"recent",q:"Compared with earlier years, the number of very hot days is generally…",options:[["more","Higher"],["less","Lower"],["same","About the same"],["unclear","Too variable to see a clear difference"]]},
+    {id:"trend",q:"What does the long-term trend show?",options:[["up","Very hot days are becoming more common"],["down","Very hot days are becoming less common"],["flat","The trend is relatively flat"],["unsure","I’m not sure"]]},
+    {id:"variability",q:"How much does the number of very hot days vary from year to year?",options:[["lots","Quite a bit"],["little","Not very much"],["unsure","I’m not sure"]]}
+  ],
+  "growing-season":[
+    {id:"spring",q:"What has happened to the last spring freeze?",options:[["earlier","It is generally earlier"],["later","It is generally later"],["same","No clear change"],["unsure","I’m not sure"]]},
+    {id:"fall",q:"What has happened to the first fall freeze?",options:[["earlier","It is generally earlier"],["later","It is generally later"],["same","No clear change"],["unsure","I’m not sure"]]},
+    {id:"season",q:"Taken together, what might those frost dates mean for the frost-free growing season?",options:[["longer","It may be getting longer"],["shorter","It may be getting shorter"],["same","There is no clear change"],["unsure","I’m not sure"]]}
+  ],
+  other:[
+    {id:"direction",q:"What best describes the long-term pattern you found?",options:[["up","It generally increases over time"],["down","It generally decreases over time"],["flat","It stays relatively flat"],["unclear","There is no clear pattern / I’m not sure"]]},
+    {id:"recent",q:"How do recent years compare with earlier years?",options:[["higher","Generally higher"],["lower","Generally lower"],["similar","Generally similar"],["unclear","Too variable to tell"]]}
+  ]
+};
+function answerLabel(question,value){const hit=question.options.find(o=>o[0]===value);return hit?hit[1]:value;}
+function getPatternSummary(){const qs=patternQuestions[state.observation]||patternQuestions.other;return qs.map(q=>`${q.q} ${answerLabel(q,state.patternAnswers[q.id]||"Not answered")}`).join("\n");}
+function patternComplete(){const qs=patternQuestions[state.observation]||patternQuestions.other;return qs.every(q=>state.patternAnswers[q.id]);}
 function saveLocal(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}
 function loadLocal(){try{const saved=JSON.parse(localStorage.getItem(STORAGE_KEY));if(saved)state={...state,...saved};}catch{}}
 function getObservationText(){return state.observation==="other"?(state.otherObservation.trim()||"Other observation"):(observationLabels[state.observation]||"Your selected observation");}
@@ -127,19 +176,25 @@ function validateObservation(){const ready=state.observation&&(state.observation
 observationSelect.addEventListener("change",()=>{state.observation=observationSelect.value;document.querySelector("#otherObservationWrap").classList.toggle("hidden",state.observation!=="other");saveLocal();validateObservation();});
 document.querySelector("#otherObservation").addEventListener("input",e=>{state.otherObservation=e.target.value;saveLocal();validateObservation();});
 document.querySelector("#observationNext").addEventListener("click",()=>showPage(5));
-function renderFocusPage(){const g=resourceGuides[state.observation]||resourceGuides.other;document.querySelector("#focusIcon").textContent=g.icon||"🔎";document.querySelector("#focusObservation").textContent=getObservationText();document.querySelector("#focusQuestion").textContent=g.focus;}
+function renderFocusPage(){const g=resourceGuides[state.observation]||resourceGuides.other;document.querySelector("#focusIcon").textContent=g.icon||"🔎";document.querySelector("#focusObservation").textContent=getObservationText();}
 
 function renderResourceGuide(){
   const g=resourceGuides[state.observation]||resourceGuides.other;
   document.querySelector("#resourceTitle").textContent="Use this resource to check your observation";
   document.querySelector("#resourceName").textContent=g.name;document.querySelector("#resourceLink").href=g.url;
   document.querySelector("#resourceSteps").innerHTML=g.steps.map((x,i)=>`<li><span>${i+1}</span><p>${x}</p></li>`).join("");
-  document.querySelector("#resourceQuestion").textContent=g.focus;
-  document.querySelector("#resourceLookFor").textContent=g.look;
   const clue=document.querySelector("#resourceClue");clue.classList.toggle("hidden",!g.clue);clue.innerHTML=g.clue||"";
 }
-function renderPathwayQuestion(){const g=resourceGuides[state.observation]||resourceGuides.other;document.querySelector("#pathwayQuestionLabel").textContent="One more thing to notice";document.querySelector("#pathwayQuestion").textContent=g.question;}
-document.querySelector("#finding").addEventListener("input",e=>{state.finding=e.target.value;saveLocal();});
+function renderPathwayQuestion(){
+  const qs=patternQuestions[state.observation]||patternQuestions.other;
+  const wrap=document.querySelector("#patternQuestions");
+  wrap.innerHTML=qs.map((q,qi)=>`<fieldset class="pattern-question"><legend>${qi+1}. ${q.q}</legend><div class="pattern-options">${q.options.map(o=>`<label><input type="radio" name="pattern_${q.id}" value="${o[0]}" ${state.patternAnswers[q.id]===o[0]?"checked":""}> <span>${o[1]}</span></label>`).join("")}</div></fieldset>`).join("");
+  wrap.querySelectorAll('input[type="radio"]').forEach(r=>r.addEventListener("change",e=>{const id=e.target.name.replace("pattern_","");state.patternAnswers[id]=e.target.value;state.finding=getPatternSummary();saveLocal();validatePattern();}));
+  document.querySelector("#patternNotes").value=state.notes||"";
+  validatePattern();
+}
+document.querySelector("#patternNotes").addEventListener("input",e=>{state.notes=e.target.value;saveLocal();});
+function validatePattern(){document.querySelector("#patternNext").disabled=!patternComplete();}
 
 document.querySelectorAll(".verdict").forEach(btn=>btn.addEventListener("click",()=>{
   document.querySelectorAll(".verdict").forEach(x=>x.classList.remove("selected"));btn.classList.add("selected");state.verdict=btn.dataset.verdict;saveLocal();
@@ -153,17 +208,17 @@ document.querySelector("#compareNext").addEventListener("click",()=>showPage(9))
 function updateComparisonReminder(){document.querySelector("#observationReminder").innerHTML=`<strong>Observation you are checking:</strong> ${getObservationText()}`;}
 function updateReview(){
   const g=resourceGuides[state.observation]||resourceGuides.other;
-  document.querySelector("#reviewObservation").textContent=getObservationText();document.querySelector("#reviewResource").textContent=g.name;document.querySelector("#reviewFinding").textContent=state.finding||"No pattern entered yet.";
+  document.querySelector("#reviewObservation").textContent=getObservationText();document.querySelector("#reviewResource").textContent=g.name;document.querySelector("#reviewFinding").textContent=getPatternSummary();document.querySelector("#reviewNotes").textContent=state.notes||"No notes added.";
   const v={supports:"The climate record generally supports the observation",mixed:"The climate record partly supports it, but the story is more complicated",unclear:"The climate record does not clearly support the observation","more-info":"I need more information to tell"};
   const c={yes:"Yes","a-little":"A little",no:"No","not-sure":"I’m not sure yet"};document.querySelector("#reviewVerdict").textContent=v[state.verdict]||"Not selected yet.";document.querySelector("#reviewChanged").textContent=c[state.changed]||"Not selected yet.";
 }
 function encodeHandoff(obj){const bytes=new TextEncoder().encode(JSON.stringify(obj));let binary="";bytes.forEach(b=>binary+=String.fromCharCode(b));return btoa(binary).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/g,"");}
-function updateJournalHandoff(){const payload={version:2,source:"climate-memory-evidence",observation:getObservationText(),finding:state.finding||"",verdict:state.verdict||""};document.querySelector("#journalHandoff").href=`https://beritdinsdale-oss.github.io/garden-observation-journal/#handoff=${encodeHandoff(payload)}`;}
+function updateJournalHandoff(){const qs=patternQuestions[state.observation]||patternQuestions.other;const structured=qs.map(q=>({question:q.q,answer:answerLabel(q,state.patternAnswers[q.id]||"Not answered")}));const finding=getPatternSummary()+(state.notes?`\n\nNotes: ${state.notes}`:"");const payload={version:3,source:"climate-memory-evidence",observation:getObservationText(),finding,patternAnswers:structured,notes:state.notes||"",verdict:state.verdict||"",changed:state.changed||""};document.querySelector("#journalHandoff").href=`https://beritdinsdale-oss.github.io/garden-observation-journal/#handoff=${encodeHandoff(payload)}`;}
 
-document.querySelector("#restart").addEventListener("click",()=>{localStorage.removeItem(STORAGE_KEY);state={path:"",observation:"",otherObservation:"",finding:"",verdict:"",changed:""};document.querySelectorAll(".selected").forEach(x=>x.classList.remove("selected"));observationSelect.value="";document.querySelector("#otherObservation").value="";document.querySelector("#otherObservationWrap").classList.add("hidden");document.querySelector("#finding").value="";document.querySelectorAll('input[name="changed"]').forEach(x=>x.checked=false);document.querySelector("#pathNext").disabled=true;document.querySelector("#observationNext").disabled=true;document.querySelector("#compareNext").disabled=true;showPage(0);});
+document.querySelector("#restart").addEventListener("click",()=>{localStorage.removeItem(STORAGE_KEY);state={path:"",observation:"",otherObservation:"",patternAnswers:{},notes:"",finding:"",verdict:"",changed:""};document.querySelectorAll(".selected").forEach(x=>x.classList.remove("selected"));observationSelect.value="";document.querySelector("#otherObservation").value="";document.querySelector("#otherObservationWrap").classList.add("hidden");document.querySelector("#patternNotes").value="";document.querySelectorAll('input[name="changed"]').forEach(x=>x.checked=false);document.querySelector("#pathNext").disabled=true;document.querySelector("#observationNext").disabled=true;document.querySelector("#compareNext").disabled=true;showPage(0);});
 function restoreUI(){
   if(state.path){document.querySelector(`.choice[data-path="${state.path}"]`)?.classList.add("selected");document.querySelector("#pathNext").disabled=false;}
-  observationSelect.value=state.observation||"";document.querySelector("#otherObservation").value=state.otherObservation||"";document.querySelector("#otherObservationWrap").classList.toggle("hidden",state.observation!=="other");document.querySelector("#finding").value=state.finding||"";
+  observationSelect.value=state.observation||"";document.querySelector("#otherObservation").value=state.otherObservation||"";document.querySelector("#otherObservationWrap").classList.toggle("hidden",state.observation!=="other");
   if(state.verdict)document.querySelector(`.verdict[data-verdict="${state.verdict}"]`)?.classList.add("selected");if(state.changed)document.querySelector(`input[name="changed"][value="${state.changed}"]`)?.setAttribute("checked","checked");validateObservation();validateComparison();
 }
 function openHash(){const id=location.hash.slice(1),idx=pages.findIndex(p=>p.id===id);if(idx>=0){if(id==="questions")configureQuestionPage();showPage(idx,false);}else showPage(0,false);}

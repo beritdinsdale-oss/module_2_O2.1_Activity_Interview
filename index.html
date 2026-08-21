@@ -206,14 +206,10 @@
 <!-- PAGE 6 -->
 <section class="page illustrated-page focus-page" data-page="5" id="focus">
   <div class="card focus-card">
-    <p class="kicker">🔎 Your question</p>
-    <h2>Here’s the observation you’re checking</h2>
+    <p class="kicker">🔎 One observation</p>
+    <h2>You’re checking</h2>
     <div class="observation-hero"><span id="focusIcon" aria-hidden="true">🌡️</span><strong id="focusObservation"></strong></div>
-    <div class="focus-question">
-      <h3>Keep this question in mind</h3>
-      <p id="focusQuestion"></p>
-    </div>
-    <p class="focus-note">Look across many years rather than focusing on one unusual year. The long view is what helps a climate pattern come into focus.</p>
+    <p class="focus-simple">Next, set up a climate record that matches this observation.</p>
   </div>
   <div class="navrow"><button class="secondary back">← Back</button><button class="primary next">Show me how to check it →</button></div>
 </section>
@@ -229,17 +225,10 @@
         <div><span class="tag">Your resource</span><h3 id="resourceName"></h3></div>
         <a id="resourceLink" class="resource-button" href="#" target="_blank" rel="noopener">Open resource ↗</a>
       </div>
-      <div class="guide-columns">
-        <div class="guide-steps">
-          <h3>Set up the resource</h3>
-          <ol id="resourceSteps"></ol>
-          <div id="resourceClue" class="mini-clue hidden"></div>
-        </div>
-        <aside class="question-sticky">
-          <span>🔎 Keep your question in view</span>
-          <strong id="resourceQuestion"></strong>
-          <div id="resourceLookFor"></div>
-        </aside>
+      <div class="guide-steps single-guide">
+        <h3>Set up the resource</h3>
+        <ol id="resourceSteps"></ol>
+        <div id="resourceClue" class="mini-clue hidden"></div>
       </div>
     </article>
   </div>
@@ -261,16 +250,17 @@
     <p class="kicker">📈 Your turn to read the story</p>
     <h2>What does the long-term record show?</h2>
 
-    <aside class="journal-transfer-note">
-      <strong>📓 This answer will carry into your Garden Journal</strong>
-      <p>When you finish the activity and select <strong>Save these responses to my Garden Journal</strong>, this response will be transferred automatically.</p>
-    </aside>
+    <p class="journal-inline-note">📓 Your answers and optional notes will be added to your Garden Journal.</p>
 
-    <label for="finding">What pattern did you find in the climate data?</label>
-    <textarea id="finding" rows="5" placeholder="In one or two sentences, describe the long-term pattern you noticed."></textarea>
-    <div class="pathway-question"><strong id="pathwayQuestionLabel"></strong><p id="pathwayQuestion"></p></div>
+    <div id="patternQuestions" class="pattern-questions"></div>
+
+    <div class="notes-box">
+      <label for="patternNotes"><strong>Optional notes</strong></label>
+      <p>Jot down anything you want to remember about the graph, your choices, or something you found surprising.</p>
+      <textarea id="patternNotes" rows="4" placeholder="Add notes if you’d like…"></textarea>
+    </div>
   </div>
-  <div class="navrow"><button class="secondary back">← Back</button><button class="primary next">Compare with the observation →</button></div>
+  <div class="navrow"><button class="secondary back">← Back</button><button id="patternNext" class="primary next" disabled>Compare with the observation →</button></div>
 </section>
 
 <!-- PAGE 9 -->
@@ -325,7 +315,8 @@
     <div class="review-list">
       <div><strong>Observation</strong><p id="reviewObservation"></p></div>
       <div><strong>Resource used</strong><p id="reviewResource"></p></div>
-      <div><strong>Pattern found</strong><p id="reviewFinding"></p></div>
+      <div><strong>What you found</strong><p id="reviewFinding" class="preline"></p></div>
+      <div><strong>Your notes</strong><p id="reviewNotes"></p></div>
       <div><strong>Comparison</strong><p id="reviewVerdict"></p></div>
       <div><strong>Did the data shift your thinking?</strong><p id="reviewChanged"></p></div>
     </div>
@@ -347,11 +338,11 @@
     </div>
     <p class="kicker">📓 Keep the good stuff</p>
     <h2>Send your investigation to your Garden Journal</h2>
-    <p>Your original observation, what you found in the climate record, and your comparison are ready to transfer. Use the button below to add them to the <strong>Climate Memory + Evidence</strong> entry in Module 2.</p>
+    <p>Your original observation, each climate-data question and answer, your optional notes, and your comparison are ready to transfer. Use the button below to add them to the <strong>Climate Memory + Evidence</strong> entry in Module 2.</p>
 
     <div class="notice">
       <strong>One click — no retyping.</strong>
-      <span>The journal will open directly to this activity entry. You will only need to complete the final reflection that appears there.</span>
+      <span>The journal will open directly to this activity entry. Your answers will arrive together in the same question-and-answer format, with your notes included.</span>
     </div>
 
     <a id="journalHandoff" class="journal-btn" href="https://beritdinsdale-oss.github.io/garden-observation-journal/" target="_blank" rel="noopener">Save these responses to my Garden Journal ↗</a>
@@ -360,6 +351,6 @@
 </section>
 
 </main>
-<script src="app.js?v=8"></script>
+<script src="app.js?v=11"></script>
 </body>
 </html>
