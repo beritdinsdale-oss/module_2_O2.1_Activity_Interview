@@ -160,6 +160,7 @@ function configureQuestionPage(){
 document.querySelector('#selfContinue').addEventListener('click',()=>showPageById('observation'));
 document.querySelector('#imBack').addEventListener('click',()=>showPageById('observation'));
 document.querySelector('#copyReturn').addEventListener('click',async()=>{const url=location.href.split('#')[0]+'#questions';try{await navigator.clipboard.writeText(url);document.querySelector('#copyStatus').textContent='Return link copied.';}catch{document.querySelector('#copyStatus').textContent='Copy this page address from your browser to return later.';}});
+document.querySelector('#printInterview')?.addEventListener('click',()=>{document.body.classList.add('printing-interview');window.print();setTimeout(()=>document.body.classList.remove('printing-interview'),300);});
 document.querySelector('#reflectionNotes').addEventListener('input',e=>{state.reflectionNotes=e.target.value;saveLocal();});
 
 const observationSelect=document.querySelector('#observationSelect');
