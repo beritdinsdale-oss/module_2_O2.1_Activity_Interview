@@ -137,7 +137,11 @@ function showPage(n,hash=true){
   if(current===9)updateReview();
   if(current===10)updateJournalHandoff();
 }
-document.querySelectorAll(".next").forEach(b=>b.addEventListener("click",()=>showPage(current+1)));
+function showPageById(id){
+  const idx=pages.findIndex(p=>p.id===id);
+  if(idx>=0)showPage(idx);
+}
+document.querySelectorAll("[data-target]").forEach(b=>b.addEventListener("click",()=>showPageById(b.dataset.target)));
 document.querySelectorAll(".back").forEach(b=>b.addEventListener("click",()=>showPage(current-1)));
 
 document.querySelectorAll(".choice").forEach(btn=>btn.addEventListener("click",()=>{
@@ -152,14 +156,14 @@ function configureQuestionPage(){
     title.textContent="Questions for your own reflection";intro.innerHTML="<strong>Think back over the years you have lived here.</strong><p>Use these questions to identify one change you feel confident you have noticed.</p>";interviewBox.classList.add("hidden");selfContinue.classList.remove("hidden");
   }
 }
-document.querySelector("#selfContinue").addEventListener("click",()=>showPage(4));
-document.querySelector("#imBack").addEventListener("click",()=>showPage(4));
+document.querySelector("#selfContinue").addEventListener("click",()=>showPageById("observation"));
+document.querySelector("#imBack").addEventListener("click",()=>showPageById("observation"));
 document.querySelector("#copyReturn").addEventListener("click",async()=>{const url=location.href.split("#")[0]+"#questions";try{await navigator.clipboard.writeText(url);document.querySelector("#copyStatus").textContent="Return link copied.";}catch{document.querySelector("#copyStatus").textContent="Copy this page address from your browser to return later.";}});
 
 const observationSelect=document.querySelector("#observationSelect");
 function validateObservation(){document.querySelector("#observationNext").disabled=!state.observation;}
 observationSelect.addEventListener("change",()=>{state.observation=observationSelect.value;state.patternAnswers={};saveLocal();validateObservation();});
-document.querySelector("#observationNext").addEventListener("click",()=>showPage(5));
+document.querySelector("#observationNext").addEventListener("click",()=>showPageById("focus"));
 function renderFocusPage(){const g=resourceGuides[state.observation];document.querySelector("#focusIcon").textContent=g.icon||"🔎";document.querySelector("#focusObservation").textContent=getObservationText();}
 
 function renderResourceGuide(){
@@ -188,7 +192,7 @@ document.querySelectorAll(".verdict").forEach(btn=>btn.addEventListener("click",
 }));
 document.querySelectorAll('input[name="changed"]').forEach(r=>r.addEventListener("change",e=>{state.changed=e.target.value;saveLocal();validateComparison();}));
 function validateComparison(){document.querySelector("#compareNext").disabled=!(state.verdict&&state.changed);}
-document.querySelector("#compareNext").addEventListener("click",()=>showPage(9));
+document.querySelector("#compareNext").addEventListener("click",()=>showPageById("review"));
 function updateComparisonReminder(){document.querySelector("#observationReminder").innerHTML=`<strong>Observation you are checking:</strong> ${getObservationText()}`;}
 function updateReview(){
   const g=resourceGuides[state.observation];
