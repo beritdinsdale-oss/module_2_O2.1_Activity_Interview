@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Climate Memory + Evidence</title>
-<link rel="stylesheet" href="styles.css?v=7">
+<link rel="stylesheet" href="styles.css?v=8">
 </head>
 <body>
 <a class="skip" href="#main">Skip to activity</a>
@@ -185,12 +185,12 @@
     <label for="observationSelect">Observation to investigate</label>
     <select id="observationSelect">
       <option value="">Choose one…</option>
-      <option value="temperature">Temperature seems different than it used to.</option>
-      <option value="precipitation">Rainfall or precipitation seems different than it used to.</option>
-      <option value="dryness">Dry periods or drought seem different than they used to.</option>
-      <option value="winter">Snow, frost, or winter conditions seem different than they used to.</option>
-      <option value="seasonal-timing">Seasonal timing or the growing season seems different than it used to.</option>
-      <option value="extreme-weather">Extreme weather seems different than it used to.</option>
+      <option value="summer-heat">Summers seem hotter.</option>
+      <option value="winter-warmth">Winters seem warmer.</option>
+      <option value="precipitation">Rainfall seems different.</option>
+      <option value="drought">Drought seems more common or severe.</option>
+      <option value="extreme-heat">Extreme heat seems more common.</option>
+      <option value="growing-season">The growing season or frost timing seems different.</option>
       <option value="other">Other observation</option>
     </select>
 
@@ -199,20 +199,8 @@
       <textarea id="otherObservation" rows="3" placeholder="Example: Spring seems to arrive earlier than it used to."></textarea>
     </div>
 
-    <fieldset class="evidence-fieldset">
-      <legend>🔎 What kind of evidence might help?</legend>
-      <p class="help">Pick one or more. We’ll use your choices to serve up a shorter, more useful list of data sources.</p>
-      <div class="chips">
-        <label><input type="checkbox" name="evidence" value="temperature"> 🌡️ Temperature over time</label>
-        <label><input type="checkbox" name="evidence" value="precipitation"> 🌧️ Rainfall or precipitation</label>
-        <label><input type="checkbox" name="evidence" value="drought"> ☀️ Drought or dry periods</label>
-        <label><input type="checkbox" name="evidence" value="snow"> ❄️ Snow or winter conditions</label>
-        <label><input type="checkbox" name="evidence" value="season"> 🌱 Frost or growing season</label>
-        <label><input type="checkbox" name="evidence" value="extremes"> ⚡ Extreme events</label>
-      </div>
-    </fieldset>
   </div>
-  <div class="navrow"><button class="secondary back">← Back</button><button id="evidenceNext" class="primary" disabled>Find matching data sources →</button></div>
+  <div class="navrow"><button class="secondary back">← Back</button><button id="observationNext" class="primary" disabled>Show me how to check it →</button></div>
 </section>
 
 <!-- PAGE 6 -->
@@ -228,50 +216,35 @@
         <circle cx="238" cy="82" r="17" class="ill-sun"/>
       </svg>
     </div>
-    <p class="kicker">🧰 Your data toolkit</p>
-    <h2>Here are some good places to look</h2>
-    <p>No need to wander through a giant resource list. These tools match the evidence you said would be useful. Choose the one that feels easiest for your question.</p>
-
+    <p class="kicker">🧭 A guide for your observation</p>
+    <h2 id="resourceTitle">Let’s check the climate record</h2>
+    <p id="resourceIntro"></p>
     <div id="sourceSummary" class="selected-summary notebook-strip"></div>
-
-    <div class="resource-grid">
-      <article class="resource" data-types="temperature precipitation snow">
-        <span class="tag">Familiar tool</span>
-        <h3>xmACIS</h3>
-        <p>Use a nearby weather station to examine long-term temperature, precipitation, and snowfall records.</p>
-        <a href="https://xmacis.rcc-acis.org/" target="_blank" rel="noopener">Open xmACIS ↗</a>
-      </article>
-
-      <article class="resource" data-types="temperature precipitation drought snow season extremes">
-        <h3>Climate Toolbox</h3>
-        <p>Explore historical climate patterns and garden-relevant measures such as temperature, precipitation, frost, drought, and growing-season conditions.</p>
-        <a href="https://climatetoolbox.org/" target="_blank" rel="noopener">Open Climate Toolbox ↗</a>
-      </article>
-
-      <article class="resource" data-types="drought precipitation">
-        <h3>Drought.gov</h3>
-        <p>Use historical drought maps and time-series information to investigate drought and dry-period observations.</p>
-        <a href="https://www.drought.gov/data-maps-tools/historical-drought-data-conditions-tool" target="_blank" rel="noopener">Open Drought.gov ↗</a>
-      </article>
-
-      <article class="resource" data-types="extremes precipitation temperature">
-        <h3>NOAA Climate at a Glance</h3>
-        <p>Look at long-term state, regional, and national temperature and precipitation trends, including extreme measures.</p>
-        <a href="https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/" target="_blank" rel="noopener">Open Climate at a Glance ↗</a>
-      </article>
-    </div>
-
+    <article class="resource-guide">
+      <div class="resource-heading">
+        <div><span class="tag">Your resource</span><h3 id="resourceName"></h3></div>
+        <a id="resourceLink" class="resource-button" href="#" target="_blank" rel="noopener">Open resource ↗</a>
+      </div>
+      <div class="guide-steps">
+        <h3>Follow these steps</h3>
+        <ol id="resourceSteps"></ol>
+      </div>
+      <div class="look-for">
+        <h3>🔎 What should I notice?</h3>
+        <div id="resourceLookFor"></div>
+      </div>
+      <div id="resourceClue" class="notice hidden"></div>
+    </article>
     <div class="notice">
       <strong>🔭 Zoom out in time.</strong>
-      <span>Try to look across decades rather than one unusual year. That longer view is what helps a climate pattern come into focus.</span>
+      <span>One unusual year is weather. Looking across many years helps a climate pattern come into focus.</span>
     </div>
-
     <div class="soft-box">
-      <strong>Found something interesting?</strong>
-      <p>Come back here with one pattern, trend, or surprise you noticed. You don’t need to become a climate-data expert.</p>
+      <strong>When you’re ready</strong>
+      <p>Come back to this tab with one pattern, trend, or surprise you noticed. You do not need to become a climate-data expert.</p>
     </div>
   </div>
-  <div class="navrow"><button class="secondary back">← Back</button><button class="primary next">I found a pattern →</button></div>
+  <div class="navrow"><button class="secondary back">← Back</button><button class="primary next">I checked the record →</button></div>
 </section>
 
 <!-- PAGE 7 -->
@@ -287,7 +260,7 @@
       </svg>
     </div>
     <p class="kicker">📈 Your turn to read the story</p>
-    <h2>What did the data seem to be saying?</h2>
+    <h2>What does the long-term record show?</h2>
 
     <aside class="journal-transfer-note">
       <strong>📓 This answer will carry into your Garden Journal</strong>
@@ -295,7 +268,8 @@
     </aside>
 
     <label for="finding">What pattern did you find in the climate data?</label>
-    <textarea id="finding" rows="5" placeholder="Describe the long-term pattern you found. Include one piece of evidence if you can."></textarea>
+    <textarea id="finding" rows="5" placeholder="In one or two sentences, describe the long-term pattern you noticed."></textarea>
+    <div class="pathway-question"><strong id="pathwayQuestionLabel"></strong><p id="pathwayQuestion"></p></div>
   </div>
   <div class="navrow"><button class="secondary back">← Back</button><button class="primary next">Compare with the observation →</button></div>
 </section>
@@ -313,15 +287,25 @@
       </svg>
     </div>
     <p class="kicker">⚖️ Put them side by side</p>
-    <h2>So… does the record match the memory?</h2>
+    <h2>Memory, meet the climate record</h2>
     <p id="observationReminder" class="selected-summary"></p>
 
     <div class="verdict-grid">
-      <button class="verdict" data-verdict="supports"><span>✓</span><strong>Mostly supports it</strong><small>The long-term record shows a similar pattern.</small></button>
-      <button class="verdict" data-verdict="mixed"><span>↔</span><strong>The picture is mixed</strong><small>Some evidence lines up, but other evidence complicates the story.</small></button>
-      <button class="verdict" data-verdict="unclear"><span>?</span><strong>Not enough evidence</strong><small>The data I found does not clearly answer the observation.</small></button>
+      <button class="verdict" data-verdict="supports"><span>✓</span><strong>Generally supports it</strong><small>The long-term record shows a similar pattern.</small></button>
+      <button class="verdict" data-verdict="mixed"><span>↔</span><strong>Partly supports it</strong><small>The pattern is there, but the story is more complicated.</small></button>
+      <button class="verdict" data-verdict="unclear"><span>?</span><strong>Doesn’t clearly support it</strong><small>The record does not show a clear long-term pattern that matches.</small></button>
+      <button class="verdict" data-verdict="more-info"><span>…</span><strong>I need more information</strong><small>The resource did not give me enough information to tell.</small></button>
     </div>
     <div id="compareFeedback" class="feedback hidden" aria-live="polite"></div>
+    <fieldset class="change-fieldset">
+      <legend>Did the data change how you think about the original observation?</legend>
+      <div class="radio-row">
+        <label><input type="radio" name="changed" value="yes"> Yes</label>
+        <label><input type="radio" name="changed" value="a-little"> A little</label>
+        <label><input type="radio" name="changed" value="no"> No</label>
+        <label><input type="radio" name="changed" value="not-sure"> I’m not sure yet</label>
+      </div>
+    </fieldset>
   </div>
   <div class="navrow"><button class="secondary back">← Back</button><button id="compareNext" class="primary" disabled>Review my result →</button></div>
 </section>
@@ -341,9 +325,10 @@
     <h2>Here’s the story you uncovered</h2>
     <div class="review-list">
       <div><strong>Observation</strong><p id="reviewObservation"></p></div>
-      <div><strong>Evidence types</strong><p id="reviewEvidence"></p></div>
+      <div><strong>Resource used</strong><p id="reviewResource"></p></div>
       <div><strong>Pattern found</strong><p id="reviewFinding"></p></div>
       <div><strong>Comparison</strong><p id="reviewVerdict"></p></div>
+      <div><strong>Did the data shift your thinking?</strong><p id="reviewChanged"></p></div>
     </div>
     <p class="help">Take a quick look. Want to tweak something? You can hop back before you save it.</p>
   </div>
@@ -363,7 +348,7 @@
     </div>
     <p class="kicker">📓 Keep the good stuff</p>
     <h2>Send your investigation to your Garden Journal</h2>
-    <p>Your observation, evidence finding, and comparison are ready to transfer. Use the button below to add them to the <strong>Climate Memory + Evidence</strong> entry in Module 2.</p>
+    <p>Your original observation, what you found in the climate record, and your comparison are ready to transfer. Use the button below to add them to the <strong>Climate Memory + Evidence</strong> entry in Module 2.</p>
 
     <div class="notice">
       <strong>One click — no retyping.</strong>
@@ -376,6 +361,6 @@
 </section>
 
 </main>
-<script src="app.js?v=7"></script>
+<script src="app.js?v=8"></script>
 </body>
 </html>

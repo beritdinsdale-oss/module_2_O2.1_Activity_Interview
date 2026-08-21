@@ -1,243 +1,161 @@
 const pages=[...document.querySelectorAll(".page")];
 let current=0;
-
-const STORAGE_KEY="climateMemoryEvidence.v7";
-let state={
-  path:"",
-  observation:"",
-  otherObservation:"",
-  evidence:[],
-  finding:"",
-  verdict:""
-};
+const STORAGE_KEY="climateMemoryEvidence.v8";
+let state={path:"",observation:"",otherObservation:"",finding:"",verdict:"",changed:""};
 
 const observationLabels={
-  temperature:"Temperature seems different than it used to.",
-  precipitation:"Rainfall or precipitation seems different than it used to.",
-  dryness:"Dry periods or drought seem different than they used to.",
-  winter:"Snow, frost, or winter conditions seem different than they used to.",
-  "seasonal-timing":"Seasonal timing or the growing season seems different than it used to.",
-  "extreme-weather":"Extreme weather seems different than it used to."
+  "summer-heat":"Summers seem hotter.",
+  "winter-warmth":"Winters seem warmer.",
+  precipitation:"Rainfall seems different.",
+  drought:"Drought seems more common or severe.",
+  "extreme-heat":"Extreme heat seems more common.",
+  "growing-season":"The growing season or frost timing seems different."
 };
 
-const evidenceLabels={
-  temperature:"Temperature over time",
-  precipitation:"Rainfall or precipitation",
-  drought:"Drought or dry periods",
-  snow:"Snow or winter conditions",
-  season:"Frost or growing season",
-  extremes:"Extreme events"
+const resourceGuides={
+  "summer-heat":{
+    title:"You noticed: Summers seem hotter",
+    intro:"A hot summer or two does not necessarily tell us whether climate has changed. A long-term temperature record lets us compare many summers and look for a pattern.",
+    name:"NOAA Climate at a Glance",
+    url:"https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/",
+    steps:["Choose a local area, such as your county or the closest available location.","For the parameter, choose Average Temperature.","Choose Summer (June–August) as the time period.","Use as much of the available historical record as possible, and display the trend if that option is available."],
+    look:"Look across the whole record rather than focusing on one unusually hot or cool summer. Is the overall pattern moving upward, downward, or staying fairly level? How much do individual summers bounce around that pattern?",
+    question:"How large is the long-term change compared with the year-to-year variation you see?"
+  },
+  "winter-warmth":{
+    title:"You noticed: Winters seem warmer",
+    intro:"Winter weather can swing dramatically from year to year. Looking across decades helps us see whether average winter temperature has changed underneath those ups and downs.",
+    name:"NOAA Climate at a Glance",
+    url:"https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/",
+    steps:["Choose a local area, such as your county or the closest available location.","For the parameter, choose Average Temperature.","Choose Winter (December–February) as the time period.","Use as much of the available historical record as possible, and display the trend if that option is available."],
+    look:"Are recent winters generally warmer than earlier winters? Notice both the long-term direction and the large year-to-year swings that can still occur.",
+    question:"Does the long-term winter pattern stand out even though individual winters vary?"
+  },
+  precipitation:{
+    title:"You noticed: Rainfall seems different",
+    intro:"Rainfall can change in more than one way. We’ll start by looking at whether seasonal precipitation totals have changed over time.",
+    name:"NOAA Climate at a Glance",
+    url:"https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/",
+    steps:["Choose a local area, such as your county or the closest available location.","For the parameter, choose Precipitation.","Choose the season that best matches the observation you or your interview partner made.","Use as much of the available historical record as possible and look across the full graph."],
+    look:"Does seasonal precipitation show a long-term direction, or mostly large swings from year to year? Compare recent decades with earlier parts of the record.",
+    clue:"<strong>🌧️ A useful clue</strong><span>A garden can feel “drier” even when total precipitation has not changed very much. When rain falls—and how it is distributed through the season—also matters.</span>",
+    question:"Does the total amount appear to be changing, or is year-to-year variability the stronger feature?"
+  },
+  drought:{
+    title:"You noticed: Drought seems more common or severe",
+    intro:"Drought is more complicated than simply receiving less rain. This historical tool lets you compare dry periods across time for a state or county.",
+    name:"Drought.gov Historical Drought Data & Conditions Tool",
+    url:"https://www.drought.gov/data-maps-tools/historical-drought-data-conditions-tool",
+    steps:["Choose your state or county as the area you want to examine.","Start with a historical time series rather than only the current drought map.","Use the Standardized Precipitation Index (SPI) if you want the longest instrumental precipitation-based record; it extends back to 1895.","Look across the graph for repeated dry periods and compare more recent periods with earlier ones."],
+    look:"Are severe dry periods concentrated in particular decades? Do recent dry periods look unusual compared with earlier parts of the record, or has drought appeared repeatedly throughout the record?",
+    question:"Does the record suggest a change in drought frequency or severity, or a long history of recurring drought?"
+  },
+  "extreme-heat":{
+    title:"You noticed: Extreme heat seems more common",
+    intro:"Average summer temperature and extreme heat are related, but they are not the same question. EPA’s climate indicators let you look specifically at unusually hot conditions and heat waves.",
+    name:"Climate Toolbox — Historical Climate Tracker",
+    url:"https://climatetoolbox.org/tool/Historical-Climate-Tracker",
+    steps:["Open the Historical Climate Tracker and set the map to your location.","Choose an annual heat metric, such as days with heat index above 90°F, 95°F, 100°F, or 105°F. Pick a threshold that makes sense for your location.","Display the historical graph and trend line.","Look from 1979 to the present and compare recent years with the earlier part of the record."],
+    look:"Are high-heat days becoming more common at your location? Notice the long-term direction, but also the large differences that can occur from one year to the next.",
+    question:"What does the local record suggest about how often very hot conditions occur over time?"
+  },
+  "growing-season":{
+    title:"You noticed: The growing season or frost timing seems different",
+    intro:"For this climate indicator, the frost-free growing season is the time between the last spring frost and the first fall frost. That gives us a consistent way to compare seasons over time.",
+    name:"Climate Toolbox — Historical Climate Tracker",
+    url:"https://climatetoolbox.org/tool/Historical-Climate-Tracker",
+    steps:["Open the Historical Climate Tracker and set the map to your location.","Choose an annual growing-season metric. Start with Growing Season Length.","Display the historical graph and trend line for 1979 to the present.","Then, if you want to see what is driving the change, switch the variable to Last Spring Freeze and First Fall Freeze and compare those graphs."],
+    look:"Is the frost-free season getting longer, shorter, or staying about the same? If it is changing, does the record point to an earlier last spring freeze, a later first fall freeze, or both?",
+    question:"If the growing season is changing, what part of the frost-free season seems to be contributing to that change?"
+  },
+  other:{
+    title:"You chose your own observation",
+    intro:"Your observation does not fit neatly into one of our pathways, so start with a broad climate-data tool and choose the measure that most closely matches what you noticed.",
+    name:"NOAA Climate at a Glance",
+    url:"https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/",
+    steps:["Choose the local area closest to the place in your observation.","Choose the climate measure that most closely matches what you noticed.","Choose a season or time period that matches the observation.","Use a long historical record and look for the overall pattern rather than one unusual year."],
+    look:"Ask whether the resource actually measures the thing you remembered. If it only answers part of your question, that is a useful finding too.",
+    question:"How well does the measure you found match the observation you wanted to investigate?"
+  }
 };
 
-function saveLocal(){
-  localStorage.setItem(STORAGE_KEY,JSON.stringify(state));
-}
-function loadLocal(){
-  try{
-    const saved=JSON.parse(localStorage.getItem(STORAGE_KEY));
-    if(saved) state={...state,...saved};
-  }catch{}
-}
+function saveLocal(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}
+function loadLocal(){try{const saved=JSON.parse(localStorage.getItem(STORAGE_KEY));if(saved)state={...state,...saved};}catch{}}
+function getObservationText(){return state.observation==="other"?(state.otherObservation.trim()||"Other observation"):(observationLabels[state.observation]||"Your selected observation");}
 function showPage(n,hash=true){
   current=Math.max(0,Math.min(pages.length-1,n));
   pages.forEach((p,i)=>p.classList.toggle("active",i===current));
   document.querySelector("#progressText").textContent=`${current+1} of ${pages.length}`;
   document.querySelector("#progressBar").style.width=`${((current+1)/pages.length)*100}%`;
-  if(hash) history.replaceState(null,"",`#${pages[current].id}`);
+  if(hash)history.replaceState(null,"",`#${pages[current].id}`);
   window.scrollTo({top:0,behavior:"smooth"});
-  if(current===5) filterResources();
-  if(current===7) updateComparisonReminder();
-  if(current===8) updateReview();
-  if(current===9) updateJournalHandoff();
+  if(current===5)renderResourceGuide();
+  if(current===6)renderPathwayQuestion();
+  if(current===7)updateComparisonReminder();
+  if(current===8)updateReview();
+  if(current===9)updateJournalHandoff();
 }
-
 document.querySelectorAll(".next").forEach(b=>b.addEventListener("click",()=>showPage(current+1)));
 document.querySelectorAll(".back").forEach(b=>b.addEventListener("click",()=>showPage(current-1)));
 
-document.querySelectorAll(".choice").forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    document.querySelectorAll(".choice").forEach(x=>x.classList.remove("selected"));
-    btn.classList.add("selected");
-    state.path=btn.dataset.path;
-    saveLocal();
-    document.querySelector("#pathNext").disabled=false;
-  });
-});
-document.querySelector("#pathNext").addEventListener("click",()=>{
-  configureQuestionPage();
-  showPage(3);
-});
-
+document.querySelectorAll(".choice").forEach(btn=>btn.addEventListener("click",()=>{
+  document.querySelectorAll(".choice").forEach(x=>x.classList.remove("selected"));btn.classList.add("selected");state.path=btn.dataset.path;saveLocal();document.querySelector("#pathNext").disabled=false;
+}));
+document.querySelector("#pathNext").addEventListener("click",()=>{configureQuestionPage();showPage(3);});
 function configureQuestionPage(){
-  const title=document.querySelector("#questionTitle");
-  const intro=document.querySelector("#questionIntro");
-  const interviewBox=document.querySelector("#interviewReturn");
-  const selfContinue=document.querySelector("#selfContinue");
-
+  const title=document.querySelector("#questionTitle"),intro=document.querySelector("#questionIntro"),interviewBox=document.querySelector("#interviewReturn"),selfContinue=document.querySelector("#selfContinue");
   if(state.path==="interview"){
-    title.textContent="Questions to ask your interview partner";
-    intro.innerHTML="<strong>Find someone who has lived in the area for many years.</strong><p>Use these questions as conversation starters. You do not need to ask them word-for-word or record every answer.</p>";
-    interviewBox.classList.remove("hidden");
-    selfContinue.classList.add("hidden");
+    title.textContent="Questions to ask your interview partner";intro.innerHTML="<strong>Find someone who has lived in the area for many years.</strong><p>Use these questions as conversation starters. You do not need to ask them word-for-word or record every answer.</p>";interviewBox.classList.remove("hidden");selfContinue.classList.add("hidden");
   }else{
-    title.textContent="Questions for your own reflection";
-    intro.innerHTML="<strong>Think back over the years you have lived here.</strong><p>Use these questions to identify one change you feel confident you have noticed.</p>";
-    interviewBox.classList.add("hidden");
-    selfContinue.classList.remove("hidden");
+    title.textContent="Questions for your own reflection";intro.innerHTML="<strong>Think back over the years you have lived here.</strong><p>Use these questions to identify one change you feel confident you have noticed.</p>";interviewBox.classList.add("hidden");selfContinue.classList.remove("hidden");
   }
 }
 document.querySelector("#selfContinue").addEventListener("click",()=>showPage(4));
 document.querySelector("#imBack").addEventListener("click",()=>showPage(4));
-
-document.querySelector("#copyReturn").addEventListener("click",async()=>{
-  const url=location.href.split("#")[0]+"#questions";
-  try{
-    await navigator.clipboard.writeText(url);
-    document.querySelector("#copyStatus").textContent="Return link copied.";
-  }catch{
-    document.querySelector("#copyStatus").textContent="Copy this page address from your browser to return later.";
-  }
-});
+document.querySelector("#copyReturn").addEventListener("click",async()=>{const url=location.href.split("#")[0]+"#questions";try{await navigator.clipboard.writeText(url);document.querySelector("#copyStatus").textContent="Return link copied.";}catch{document.querySelector("#copyStatus").textContent="Copy this page address from your browser to return later.";}});
 
 const observationSelect=document.querySelector("#observationSelect");
-observationSelect.addEventListener("change",()=>{
-  state.observation=observationSelect.value;
-  const wrap=document.querySelector("#otherObservationWrap");
-  wrap.classList.toggle("hidden",state.observation!=="other");
-  saveLocal();
-  validateEvidencePage();
-});
+function validateObservation(){const ready=state.observation&&(state.observation!=="other"||state.otherObservation.trim());document.querySelector("#observationNext").disabled=!ready;}
+observationSelect.addEventListener("change",()=>{state.observation=observationSelect.value;document.querySelector("#otherObservationWrap").classList.toggle("hidden",state.observation!=="other");saveLocal();validateObservation();});
+document.querySelector("#otherObservation").addEventListener("input",e=>{state.otherObservation=e.target.value;saveLocal();validateObservation();});
+document.querySelector("#observationNext").addEventListener("click",()=>showPage(5));
 
-document.querySelector("#otherObservation").addEventListener("input",e=>{
-  state.otherObservation=e.target.value;
-  saveLocal();
-  validateEvidencePage();
-});
-document.querySelectorAll('input[name="evidence"]').forEach(cb=>{
-  cb.addEventListener("change",()=>{
-    state.evidence=[...document.querySelectorAll('input[name="evidence"]:checked')].map(x=>x.value);
-    saveLocal();
-    validateEvidencePage();
-  });
-});
-function validateEvidencePage(){
-  const observationReady=state.observation && (state.observation!=="other" || state.otherObservation.trim());
-  document.querySelector("#evidenceNext").disabled=!(observationReady && state.evidence.length);
+function renderResourceGuide(){
+  const g=resourceGuides[state.observation]||resourceGuides.other;
+  document.querySelector("#resourceTitle").textContent=g.title;document.querySelector("#resourceIntro").textContent=g.intro;
+  document.querySelector("#sourceSummary").innerHTML=`<strong>Observation you are checking:</strong> ${getObservationText()}`;
+  document.querySelector("#resourceName").textContent=g.name;document.querySelector("#resourceLink").href=g.url;
+  document.querySelector("#resourceSteps").innerHTML=g.steps.map((x,i)=>`<li><span>${i+1}</span><p>${x}</p></li>`).join("");
+  document.querySelector("#resourceLookFor").textContent=g.look;
+  const clue=document.querySelector("#resourceClue");clue.classList.toggle("hidden",!g.clue);clue.innerHTML=g.clue||"";
 }
-document.querySelector("#evidenceNext").addEventListener("click",()=>showPage(5));
+function renderPathwayQuestion(){const g=resourceGuides[state.observation]||resourceGuides.other;document.querySelector("#pathwayQuestionLabel").textContent="One more thing to notice";document.querySelector("#pathwayQuestion").textContent=g.question;}
+document.querySelector("#finding").addEventListener("input",e=>{state.finding=e.target.value;saveLocal();});
 
-function getObservationText(){
-  if(state.observation==="other") return state.otherObservation.trim() || "Other observation";
-  return observationLabels[state.observation] || "Your selected observation";
-}
-
-function filterResources(){
-  const selected=new Set(state.evidence);
-  document.querySelectorAll(".resource").forEach(card=>{
-    const types=card.dataset.types.split(" ");
-    card.classList.toggle("hidden-resource",!types.some(t=>selected.has(t)));
-  });
-  document.querySelector("#sourceSummary").innerHTML=
-    `<strong>Evidence you chose:</strong> ${state.evidence.map(x=>evidenceLabels[x]).join(", ")}`;
-}
-
-document.querySelector("#finding").addEventListener("input",e=>{
-  state.finding=e.target.value;
-  saveLocal();
-});
-
-document.querySelectorAll(".verdict").forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    document.querySelectorAll(".verdict").forEach(x=>x.classList.remove("selected"));
-    btn.classList.add("selected");
-    state.verdict=btn.dataset.verdict;
-    saveLocal();
-
-    const f=document.querySelector("#compareFeedback");
-    f.classList.remove("hidden");
-    const messages={
-      supports:"The long-term record generally lines up with the observation. In your journal, keep the evidence that made that connection convincing.",
-      mixed:"A mixed result is useful. The observation may capture only one season, location, or part of a more complicated pattern.",
-      unclear:"An unclear result is still a valid finding. The data you found may not measure exactly what was remembered, or you may need a different record."
-    };
-    f.textContent=messages[state.verdict];
-    document.querySelector("#compareNext").disabled=false;
-  });
-});
+document.querySelectorAll(".verdict").forEach(btn=>btn.addEventListener("click",()=>{
+  document.querySelectorAll(".verdict").forEach(x=>x.classList.remove("selected"));btn.classList.add("selected");state.verdict=btn.dataset.verdict;saveLocal();
+  const f=document.querySelector("#compareFeedback");f.classList.remove("hidden");
+  const messages={supports:"The long-term record generally lines up with the observation.",mixed:"A partial match is useful: the memory may capture one part of a more complicated pattern.",unclear:"A mismatch is useful too. The long-term record may tell a different story than the memory.","more-info":"Sometimes the best conclusion is that the resource did not answer the question well enough. That is a valid finding."};
+  f.textContent=messages[state.verdict];validateComparison();
+}));
+document.querySelectorAll('input[name="changed"]').forEach(r=>r.addEventListener("change",e=>{state.changed=e.target.value;saveLocal();validateComparison();}));
+function validateComparison(){document.querySelector("#compareNext").disabled=!(state.verdict&&state.changed);}
 document.querySelector("#compareNext").addEventListener("click",()=>showPage(8));
-
-function updateComparisonReminder(){
-  document.querySelector("#observationReminder").innerHTML=
-    `<strong>Observation you are checking:</strong> ${observationLabels[state.observation]||"Your selected observation"}`;
-}
+function updateComparisonReminder(){document.querySelector("#observationReminder").innerHTML=`<strong>Observation you are checking:</strong> ${getObservationText()}`;}
 function updateReview(){
-  document.querySelector("#reviewObservation").textContent=getObservationText();
-  document.querySelector("#reviewEvidence").textContent=state.evidence.map(x=>evidenceLabels[x]).join(", ");
-  document.querySelector("#reviewFinding").textContent=state.finding||"No pattern entered yet.";
-  const v={supports:"Mostly supports the observation",mixed:"The picture is mixed",unclear:"Not enough evidence"};
-  document.querySelector("#reviewVerdict").textContent=v[state.verdict]||"Not selected yet.";
+  const g=resourceGuides[state.observation]||resourceGuides.other;
+  document.querySelector("#reviewObservation").textContent=getObservationText();document.querySelector("#reviewResource").textContent=g.name;document.querySelector("#reviewFinding").textContent=state.finding||"No pattern entered yet.";
+  const v={supports:"The climate record generally supports the observation",mixed:"The climate record partly supports it, but the story is more complicated",unclear:"The climate record does not clearly support the observation","more-info":"I need more information to tell"};
+  const c={yes:"Yes","a-little":"A little",no:"No","not-sure":"I’m not sure yet"};document.querySelector("#reviewVerdict").textContent=v[state.verdict]||"Not selected yet.";document.querySelector("#reviewChanged").textContent=c[state.changed]||"Not selected yet.";
 }
+function encodeHandoff(obj){const bytes=new TextEncoder().encode(JSON.stringify(obj));let binary="";bytes.forEach(b=>binary+=String.fromCharCode(b));return btoa(binary).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/g,"");}
+function updateJournalHandoff(){const payload={version:2,source:"climate-memory-evidence",observation:getObservationText(),finding:state.finding||"",verdict:state.verdict||""};document.querySelector("#journalHandoff").href=`https://beritdinsdale-oss.github.io/garden-observation-journal/#handoff=${encodeHandoff(payload)}`;}
 
-function encodeHandoff(obj){
-  const bytes=new TextEncoder().encode(JSON.stringify(obj));
-  let binary="";
-  bytes.forEach(b=>binary+=String.fromCharCode(b));
-  return btoa(binary).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
-}
-function updateJournalHandoff(){
-  const payload={
-    version:2,
-    source:"climate-memory-evidence",
-    observation:getObservationText(),
-    finding:state.finding||"",
-    verdict:state.verdict||""
-  };
-  document.querySelector("#journalHandoff").href=
-    `https://beritdinsdale-oss.github.io/garden-observation-journal/#handoff=${encodeHandoff(payload)}`;
-}
-
-document.querySelector("#restart").addEventListener("click",()=>{
-  localStorage.removeItem(STORAGE_KEY);
-  state={path:"",observation:"",otherObservation:"",evidence:[],finding:"",verdict:""};
-  document.querySelectorAll(".selected").forEach(x=>x.classList.remove("selected"));
-  document.querySelectorAll('input[name="evidence"]').forEach(x=>x.checked=false);
-  observationSelect.value="";
-  document.querySelector("#otherObservation").value="";
-  document.querySelector("#otherObservationWrap").classList.add("hidden");
-  document.querySelector("#finding").value="";
-  document.querySelector("#pathNext").disabled=true;
-  document.querySelector("#evidenceNext").disabled=true;
-  document.querySelector("#compareNext").disabled=true;
-  showPage(0);
-});
-
+document.querySelector("#restart").addEventListener("click",()=>{localStorage.removeItem(STORAGE_KEY);state={path:"",observation:"",otherObservation:"",finding:"",verdict:"",changed:""};document.querySelectorAll(".selected").forEach(x=>x.classList.remove("selected"));observationSelect.value="";document.querySelector("#otherObservation").value="";document.querySelector("#otherObservationWrap").classList.add("hidden");document.querySelector("#finding").value="";document.querySelectorAll('input[name="changed"]').forEach(x=>x.checked=false);document.querySelector("#pathNext").disabled=true;document.querySelector("#observationNext").disabled=true;document.querySelector("#compareNext").disabled=true;showPage(0);});
 function restoreUI(){
-  if(state.path){
-    const btn=document.querySelector(`.choice[data-path="${state.path}"]`);
-    btn?.classList.add("selected");
-    document.querySelector("#pathNext").disabled=false;
-  }
-  observationSelect.value=state.observation||"";
-  document.querySelector("#otherObservation").value=state.otherObservation||"";
-  document.querySelector("#otherObservationWrap").classList.toggle("hidden",state.observation!=="other");
-  document.querySelectorAll('input[name="evidence"]').forEach(cb=>cb.checked=state.evidence.includes(cb.value));
-  document.querySelector("#finding").value=state.finding||"";
-  if(state.verdict){
-    document.querySelector(`.verdict[data-verdict="${state.verdict}"]`)?.classList.add("selected");
-    document.querySelector("#compareNext").disabled=false;
-  }
-  validateEvidencePage();
+  if(state.path){document.querySelector(`.choice[data-path="${state.path}"]`)?.classList.add("selected");document.querySelector("#pathNext").disabled=false;}
+  observationSelect.value=state.observation||"";document.querySelector("#otherObservation").value=state.otherObservation||"";document.querySelector("#otherObservationWrap").classList.toggle("hidden",state.observation!=="other");document.querySelector("#finding").value=state.finding||"";
+  if(state.verdict)document.querySelector(`.verdict[data-verdict="${state.verdict}"]`)?.classList.add("selected");if(state.changed)document.querySelector(`input[name="changed"][value="${state.changed}"]`)?.setAttribute("checked","checked");validateObservation();validateComparison();
 }
-
-function openHash(){
-  const id=location.hash.slice(1);
-  const idx=pages.findIndex(p=>p.id===id);
-  if(idx>=0){
-    if(id==="questions") configureQuestionPage();
-    showPage(idx,false);
-  }else showPage(0,false);
-}
-
-loadLocal();
-restoreUI();
-openHash();
+function openHash(){const id=location.hash.slice(1),idx=pages.findIndex(p=>p.id===id);if(idx>=0){if(id==="questions")configureQuestionPage();showPage(idx,false);}else showPage(0,false);}
+loadLocal();restoreUI();openHash();

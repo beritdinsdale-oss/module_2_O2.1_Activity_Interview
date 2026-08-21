@@ -250,3 +250,22 @@ body{
   .chips{grid-template-columns:1fr}
   .illustration.small{max-width:300px}
 }
+
+/* v8 observation-specific resource pathways */
+.resource-guide{margin-top:1rem;border:1px solid #dedfd5;border-radius:24px;padding:1.25rem;background:linear-gradient(145deg,#fffdf5,#f5f9ff);box-shadow:5px 6px 0 rgba(72,98,102,.06)}
+.resource-heading{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;border-bottom:1px dashed #d7d1bd;padding-bottom:1rem;margin-bottom:1rem}
+.resource-heading h3{font-family:Georgia,"Times New Roman",serif;color:var(--navy);font-size:1.35rem;margin:.35rem 0 0}
+.resource-button{display:inline-block;border-radius:999px;padding:.75rem 1rem;background:#fff;border:2px solid #347f67;color:#1f624d;font-weight:700;text-decoration:none}
+.guide-steps ol{list-style:none;padding:0;margin:.8rem 0 1.2rem;display:grid;gap:.7rem}
+.guide-steps li{display:grid;grid-template-columns:38px 1fr;gap:.75rem;align-items:start;background:#fff;border-radius:17px;padding:.75rem .9rem;box-shadow:2px 3px 0 rgba(72,98,102,.05)}
+.guide-steps li>span{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#fff0b8;font-weight:800;color:#5d4a20}
+.guide-steps li p{margin:.3rem 0 0}
+.look-for{background:#eef8f2;border-left:7px solid #5c9275;border-radius:16px;padding:1rem 1.1rem;margin:1rem 0}
+.look-for h3{margin-top:0;color:var(--navy)}
+.pathway-question{margin-top:1rem;background:#fff7d9;border-radius:18px;padding:1rem 1.1rem;box-shadow:3px 4px 0 rgba(90,70,40,.05)}
+.pathway-question p{margin-bottom:0}
+.change-fieldset{margin-top:1.25rem;border:1px solid #dedfd5;border-radius:20px;padding:1rem;background:#fffaf0}
+.change-fieldset legend{font-weight:800;color:var(--navy);padding:0 .4rem}
+.radio-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem;margin-top:.5rem}
+.radio-row label{background:#fff;border:1px solid #dedfd5;border-radius:14px;padding:.75rem;cursor:pointer}
+@media(max-width:720px){.radio-row{grid-template-columns:1fr}.resource-heading{align-items:flex-start}}
