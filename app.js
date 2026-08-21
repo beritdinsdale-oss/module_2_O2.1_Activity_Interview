@@ -152,15 +152,15 @@ document.querySelector('#pathNext').addEventListener('click',()=>{configureQuest
 function configureQuestionPage(){
   const title=document.querySelector('#questionTitle'),intro=document.querySelector('#questionIntro'),interviewBox=document.querySelector('#interviewReturn'),selfContinue=document.querySelector('#selfContinue');
   if(state.path==='interview'){
-    title.textContent='Questions to ask your interview partner';intro.innerHTML='<strong>Find someone who has lived in the area for many years.</strong><p>Use these questions as conversation starters. You do not need to ask them word-for-word or record every answer.</p>';interviewBox.classList.remove('hidden');selfContinue.classList.add('hidden');document.querySelector('#reflectionNotesHeading').textContent='Take notes during your conversation';document.querySelector('#reflectionNotes').placeholder='Type your interview notes here…';
+    title.textContent='Questions to ask your interview partner';intro.innerHTML='<strong>Find someone who has lived in the area for many years.</strong><p>Use these questions as conversation starters. You do not need to ask them word-for-word or record every answer.</p>';interviewBox.classList.remove('hidden');selfContinue.classList.add('hidden');document.querySelector('#interviewPrintActions').classList.remove('hidden');document.querySelector('#reflectionNotesHeading').textContent='Take notes during your conversation';document.querySelector('#reflectionNotes').placeholder='Type your interview notes here…';
   }else{
-    title.textContent='Questions for your own reflection';intro.innerHTML='<strong>Think back over the years you have lived here.</strong><p>Use these questions to identify one change you feel confident you have noticed.</p>';interviewBox.classList.add('hidden');selfContinue.classList.remove('hidden');document.querySelector('#reflectionNotesHeading').textContent='Take notes as you reflect';document.querySelector('#reflectionNotes').placeholder='Type your reflection notes here…';
+    title.textContent='Questions for your own reflection';intro.innerHTML='<strong>Think back over the years you have lived here.</strong><p>Use these questions to identify one change you feel confident you have noticed.</p>';interviewBox.classList.add('hidden');selfContinue.classList.remove('hidden');document.querySelector('#interviewPrintActions').classList.add('hidden');document.querySelector('#reflectionNotesHeading').textContent='Take notes as you reflect';document.querySelector('#reflectionNotes').placeholder='Type your reflection notes here…';
   }
 }
 document.querySelector('#selfContinue').addEventListener('click',()=>showPageById('observation'));
 document.querySelector('#imBack').addEventListener('click',()=>showPageById('observation'));
 document.querySelector('#copyReturn').addEventListener('click',async()=>{const url=location.href.split('#')[0]+'#questions';try{await navigator.clipboard.writeText(url);document.querySelector('#copyStatus').textContent='Return link copied.';}catch{document.querySelector('#copyStatus').textContent='Copy this page address from your browser to return later.';}});
-document.querySelector('#printInterview')?.addEventListener('click',()=>{document.body.classList.add('printing-interview');window.print();setTimeout(()=>document.body.classList.remove('printing-interview'),300);});
+document.querySelector('#printInterview')?.addEventListener('click',()=>{document.body.classList.add('printing-interview');window.print();document.body.classList.remove('printing-interview');});
 document.querySelector('#reflectionNotes').addEventListener('input',e=>{state.reflectionNotes=e.target.value;saveLocal();});
 
 const observationSelect=document.querySelector('#observationSelect');
