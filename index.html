@@ -90,9 +90,10 @@
     </div>
     <p class="kicker">💭 Memory + 📈 evidence</p>
     <h2>Does the climate record match what we remember?</h2>
-    <p>Our memories are useful clues, especially when we’ve watched the same place for years. Climate records give us another view: measurements collected over decades. The record might echo the memory, tell a more complicated story, or leave us with a new question. All three are useful findings.</p>
+    <p>Our memories are useful clues, especially when we’ve watched the same place for years. Climate records give us another view: measurements collected over decades. Put them together and we can ask a surprisingly interesting question.</p>
     <div class="notice sticky-note">
       <span class="pushpin" aria-hidden="true">●</span><strong>No “gotcha” answers here.</strong>
+      <span>The record might echo the memory, tell a more complicated story, or leave us with a new question. All three are useful findings.</span>
     </div>
     <p>First, decide whose memories you want to start with — your own, or someone else’s.</p>
   </div>
@@ -149,6 +150,13 @@
       <div><span>2</span><p>Have summers, winters, rainfall, snow, frost, or extreme weather changed?</p></div>
       <div><span>3</span><p>Have you noticed changes in bloom time, irrigation needs, pests, or the growing season?</p></div>
       <div><span>4</span><p>Which change are you most confident you have noticed?</p></div>
+    </div>
+
+    <div class="reflection-notes">
+      <h3 id="reflectionNotesHeading">Capture your thoughts</h3>
+      <p id="reflectionNotesHelp">You can either handwrite your responses or type them directly into the box below. <strong>Anything you type here will be saved in your Garden Journal.</strong></p>
+      <label for="reflectionNotes"><strong>Notes (optional)</strong></label>
+      <textarea id="reflectionNotes" rows="6" placeholder="Type your reflections or interview notes here…"></textarea>
     </div>
 
     <div id="interviewReturn" class="return-box hidden">
@@ -236,10 +244,13 @@
     <p class="kicker">✨ Nice work</p>
     <h2>Here’s what you found in the climate record</h2>
     <div class="review-list">
-      <div><strong>Observation</strong><p id="reviewObservation"></p></div>
-      <div><strong>Resource used</strong><p id="reviewResource"></p></div>
-      <div><strong>What you found</strong><p id="reviewFinding" class="preline"></p></div>
-      <div><strong>Your notes</strong><p id="reviewNotes"></p></div>
+      <div class="review-card"><span class="review-label">Observation</span><p id="reviewObservation" class="review-answer"></p></div>
+      <div class="review-card"><span class="review-label">Resource used</span><p id="reviewResource" class="review-answer"></p></div>
+      <div class="review-card">
+        <span class="review-label">Your recorded evidence</span>
+        <div id="reviewFinding" class="review-evidence-list"></div>
+      </div>
+      <div class="review-card"><span class="review-label">Your notes</span><p id="reviewNotes" class="review-answer"></p></div>
     </div>
     <p class="help">Take a quick look at the evidence you recorded. Next, you’ll step back and decide what it means for the original observation.</p>
   </div>
@@ -288,6 +299,12 @@
         <label><input type="radio" name="changed" value="not-sure"> I’m not sure yet</label>
       </div>
     </fieldset>
+    <div class="change-comment">
+      <label for="changedComment"><strong>Tell us more, if you’d like.</strong></label>
+      <p>What did the data make you reconsider, confirm, or wonder about?</p>
+      <textarea id="changedComment" rows="4" placeholder="Optional reflection…"></textarea>
+      <p class="journal-inline-note">📓 Your response here will also be saved in your Garden Journal.</p>
+    </div>
   </div>
   <div class="navrow"><button class="secondary" type="button" data-target="review">← Back to my summary</button><button id="compareNext" class="primary" disabled>Save to my journal →</button></div>
 </section>
@@ -305,12 +322,7 @@
     </div>
     <p class="kicker">📓 Keep the good stuff</p>
     <h2>Send your investigation to your Garden Journal</h2>
-    <p>Your original observation, each climate-data question and answer, your optional notes, and your comparison are ready to transfer. Use the button below to add them to the <strong>Climate Memory + Evidence</strong> entry in Module 2.</p>
-
-    <div class="notice">
-      <strong>One click — no retyping.</strong>
-      <span>The journal will open directly to this activity entry. Your answers will arrive together in the same question-and-answer format, with your notes included.</span>
-    </div>
+    <p>Your reflection or interview notes, original observation, climate-data answers, and final reflection are ready to transfer. Use the button below to add them to the <strong>Climate Memory + Evidence</strong> entry in Module 2.</p>
 
     <a id="journalHandoff" class="journal-btn" href="https://beritdinsdale-oss.github.io/garden-observation-journal/" target="_blank" rel="noopener">Save these responses to my Garden Journal ↗</a>
   </div>
@@ -318,6 +330,6 @@
 </section>
 
 </main>
-<script src="app.js?v=12"></script>
+<script src="app.js?v=13"></script>
 </body>
 </html>

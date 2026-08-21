@@ -312,3 +312,28 @@ body{
 .evidence-notes p{margin:.3rem 0 0;white-space:pre-wrap}
 .comparison-question{margin:1.3rem 0 .8rem;font-size:1.2rem;color:var(--navy)}
 @media(max-width:700px){.evidence-answer{grid-template-columns:1fr}.resource-button-large{font-size:1rem}}
+
+/* v13 consolidated usability + accessibility refinements */
+.reflection-notes,.change-comment{margin-top:1.25rem;padding:1.05rem 1.15rem;border:1px solid var(--line);border-radius:16px;background:#fffdf7}
+.reflection-notes h3,.change-comment label{margin-top:0}
+.reflection-notes textarea,.change-comment textarea,.trend-number input{font:inherit}
+.review-card{display:block!important}
+.review-label{display:block;font-size:.82rem;letter-spacing:.07em;text-transform:uppercase;font-weight:800;color:#5c467b;margin-bottom:.4rem}
+.review-answer{font-size:1.08rem;font-weight:650;line-height:1.45}
+.review-evidence-list{display:grid;gap:.7rem;margin-top:.7rem}
+.summary-qa{padding:.85rem 1rem;border-left:4px solid #d9c7e8;background:#fff;border-radius:10px}
+.summary-question{display:block;font-weight:650;line-height:1.35;margin-bottom:.35rem}
+.summary-answer{display:block;font-size:1.08rem;line-height:1.4}
+.summary-qa small{display:block;margin-top:.3rem;color:var(--muted)}
+.accessibility-note,.trend-help,.metric-options,.graph-key,.new-check-callout{margin:1rem 0;padding:.9rem 1rem;border-radius:14px;background:#f6f3fb;border:1px solid #ded5e8;line-height:1.5}
+.graph-key{display:grid;gap:.3rem}
+.graph-key span{font-weight:650}
+.metric-options p,.trend-help p{margin:.45rem 0}
+.interpretive-feedback{margin-top:.9rem;padding:.9rem 1rem;border-radius:14px;background:#f4f8f0;border:1px solid #cedbc6;line-height:1.5}
+.trend-number{display:block;margin-top:1rem;padding:.85rem 1rem;border-radius:12px;background:#fff;border:1px solid var(--line)}
+.trend-number>span{display:flex;align-items:center;gap:.5rem;margin-top:.5rem}
+.trend-number input{max-width:9rem;padding:.65rem .75rem;border:1px solid var(--line);border-radius:9px}
+.freeze-results{display:grid;gap:.6rem;margin:.9rem 0}
+.freeze-results>div{padding:.75rem .9rem;border-radius:12px;background:#fff;border:1px solid var(--line)}
+.freeze-results span,.freeze-results strong{display:block}
+.freeze-results span{font-size:.86rem;color:var(--muted);margin-bottom:.25rem}
