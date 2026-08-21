@@ -14,35 +14,39 @@ const observationLabels={
 
 const resourceGuides={
   "summer-heat":{
-    title:"You noticed: Summers seem hotter",
+    title:"Summers seem hotter",
+    icon:"🌡️", focus:"Across many years, are recent summers generally warmer than earlier summers, or is there no clear long-term change?",
     intro:"A hot summer or two does not necessarily tell us whether climate has changed. A long-term temperature record lets us compare many summers and look for a pattern.",
     name:"NOAA Climate at a Glance",
     url:"https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/",
-    steps:["Choose a local area, such as your county or the closest available location.","For the parameter, choose Average Temperature.","Choose Summer (June–August) as the time period.","Use as much of the available historical record as possible, and display the trend if that option is available."],
+    steps:["From the Climate at a Glance home page, choose <strong>City</strong>, then <strong>City Time Series</strong>.","Choose your <strong>State</strong> and the nearest available <strong>City</strong>.","Set <strong>Parameter → Average Temperature</strong>, <strong>Time Scale → 3-Month</strong>, and <strong>Month → August</strong>.","Set <strong>Start Year</strong> to the earliest available year and <strong>End Year</strong> to the most recent available year."],
     look:"Look across the whole record rather than focusing on one unusually hot or cool summer. Is the overall pattern moving upward, downward, or staying fairly level? How much do individual summers bounce around that pattern?",
     question:"How large is the long-term change compared with the year-to-year variation you see?"
   },
   "winter-warmth":{
-    title:"You noticed: Winters seem warmer",
+    title:"Winters seem warmer",
+    icon:"❄️", focus:"Across many years, are recent winters generally warmer than earlier winters, or is there no clear long-term change?",
     intro:"Winter weather can swing dramatically from year to year. Looking across decades helps us see whether average winter temperature has changed underneath those ups and downs.",
     name:"NOAA Climate at a Glance",
     url:"https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/",
-    steps:["Choose a local area, such as your county or the closest available location.","For the parameter, choose Average Temperature.","Choose Winter (December–February) as the time period.","Use as much of the available historical record as possible, and display the trend if that option is available."],
+    steps:["From the Climate at a Glance home page, choose <strong>City</strong>, then <strong>City Time Series</strong>.","Choose your <strong>State</strong> and the nearest available <strong>City</strong>.","Set <strong>Parameter → Average Temperature</strong>, <strong>Time Scale → 3-Month</strong>, and <strong>Month → February</strong>.","Set <strong>Start Year</strong> to the earliest available year and <strong>End Year</strong> to the most recent available year."],
     look:"Are recent winters generally warmer than earlier winters? Notice both the long-term direction and the large year-to-year swings that can still occur.",
     question:"Does the long-term winter pattern stand out even though individual winters vary?"
   },
   precipitation:{
-    title:"You noticed: Rainfall seems different",
+    title:"Rainfall seems different",
+    icon:"🌧️", focus:"For the season connected to the observation, has precipitation changed across many years, or does it mostly vary from year to year?",
     intro:"Rainfall can change in more than one way. We’ll start by looking at whether seasonal precipitation totals have changed over time.",
     name:"NOAA Climate at a Glance",
     url:"https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/",
-    steps:["Choose a local area, such as your county or the closest available location.","For the parameter, choose Precipitation.","Choose the season that best matches the observation you or your interview partner made.","Use as much of the available historical record as possible and look across the full graph."],
+    steps:["From the Climate at a Glance home page, choose <strong>City</strong>, then <strong>City Time Series</strong>.","Choose your <strong>State</strong> and nearest available <strong>City</strong>. Set <strong>Parameter → Precipitation</strong>.","Match the season: <strong>Winter → 3-Month + February</strong>; <strong>Spring → 3-Month + May</strong>; <strong>Summer → 3-Month + August</strong>; <strong>Fall → 3-Month + November</strong>.","Set <strong>Start Year</strong> to the earliest available year and <strong>End Year</strong> to the most recent available year."],
     look:"Does seasonal precipitation show a long-term direction, or mostly large swings from year to year? Compare recent decades with earlier parts of the record.",
     clue:"<strong>🌧️ A useful clue</strong><span>A garden can feel “drier” even when total precipitation has not changed very much. When rain falls—and how it is distributed through the season—also matters.</span>",
     question:"Does the total amount appear to be changing, or is year-to-year variability the stronger feature?"
   },
   drought:{
-    title:"You noticed: Drought seems more common or severe",
+    title:"Drought seems more common or severe",
+    icon:"☀️", focus:"Across the historical record, do droughts appear to be becoming more frequent or severe, or has drought recurred throughout the record?",
     intro:"Drought is more complicated than simply receiving less rain. This historical tool lets you compare dry periods across time for a state or county.",
     name:"Drought.gov Historical Drought Data & Conditions Tool",
     url:"https://www.drought.gov/data-maps-tools/historical-drought-data-conditions-tool",
@@ -51,7 +55,8 @@ const resourceGuides={
     question:"Does the record suggest a change in drought frequency or severity, or a long history of recurring drought?"
   },
   "extreme-heat":{
-    title:"You noticed: Extreme heat seems more common",
+    title:"Extreme heat seems more common",
+    icon:"🔥", focus:"Across many years, are very hot days becoming more common at this location?",
     intro:"Average summer temperature and extreme heat are related, but they are not the same question. EPA’s climate indicators let you look specifically at unusually hot conditions and heat waves.",
     name:"Climate Toolbox — Historical Climate Tracker",
     url:"https://climatetoolbox.org/tool/Historical-Climate-Tracker",
@@ -60,16 +65,18 @@ const resourceGuides={
     question:"What does the local record suggest about how often very hot conditions occur over time?"
   },
   "growing-season":{
-    title:"You noticed: The growing season or frost timing seems different",
+    title:"The growing season or frost timing seems different",
+    icon:"🌱", focus:"Across many years, is the last spring freeze shifting earlier and/or the first fall freeze shifting later?",
     intro:"For this climate indicator, the frost-free growing season is the time between the last spring frost and the first fall frost. That gives us a consistent way to compare seasons over time.",
     name:"Climate Toolbox — Historical Climate Tracker",
     url:"https://climatetoolbox.org/tool/Historical-Climate-Tracker",
-    steps:["Open the Historical Climate Tracker and set the map to your location.","Choose an annual growing-season metric. Start with Growing Season Length.","Display the historical graph and trend line for 1979 to the present.","Then, if you want to see what is driving the change, switch the variable to Last Spring Freeze and First Fall Freeze and compare those graphs."],
+    steps:["Open the <strong>Historical Climate Tracker</strong> and select your location on the map.","Choose <strong>Last Spring Freeze</strong>. Look across the graph: is the date generally shifting earlier, later, or showing no clear pattern?","Next choose <strong>First Fall Freeze</strong>. Is that date generally shifting earlier, later, or showing no clear pattern?","Put the two clues together: an earlier last spring freeze and/or a later first fall freeze can lengthen the frost-free growing season."],
     look:"Is the frost-free season getting longer, shorter, or staying about the same? If it is changing, does the record point to an earlier last spring freeze, a later first fall freeze, or both?",
     question:"If the growing season is changing, what part of the frost-free season seems to be contributing to that change?"
   },
   other:{
-    title:"You chose your own observation",
+    title:"Your observation",
+    icon:"✏️", focus:"Across many years, does the climate measure that best matches your observation show a clear long-term pattern?",
     intro:"Your observation does not fit neatly into one of our pathways, so start with a broad climate-data tool and choose the measure that most closely matches what you noticed.",
     name:"NOAA Climate at a Glance",
     url:"https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/",
@@ -89,11 +96,12 @@ function showPage(n,hash=true){
   document.querySelector("#progressBar").style.width=`${((current+1)/pages.length)*100}%`;
   if(hash)history.replaceState(null,"",`#${pages[current].id}`);
   window.scrollTo({top:0,behavior:"smooth"});
-  if(current===5)renderResourceGuide();
-  if(current===6)renderPathwayQuestion();
-  if(current===7)updateComparisonReminder();
-  if(current===8)updateReview();
-  if(current===9)updateJournalHandoff();
+  if(current===5)renderFocusPage();
+  if(current===6)renderResourceGuide();
+  if(current===7)renderPathwayQuestion();
+  if(current===8)updateComparisonReminder();
+  if(current===9)updateReview();
+  if(current===10)updateJournalHandoff();
 }
 document.querySelectorAll(".next").forEach(b=>b.addEventListener("click",()=>showPage(current+1)));
 document.querySelectorAll(".back").forEach(b=>b.addEventListener("click",()=>showPage(current-1)));
@@ -119,13 +127,14 @@ function validateObservation(){const ready=state.observation&&(state.observation
 observationSelect.addEventListener("change",()=>{state.observation=observationSelect.value;document.querySelector("#otherObservationWrap").classList.toggle("hidden",state.observation!=="other");saveLocal();validateObservation();});
 document.querySelector("#otherObservation").addEventListener("input",e=>{state.otherObservation=e.target.value;saveLocal();validateObservation();});
 document.querySelector("#observationNext").addEventListener("click",()=>showPage(5));
+function renderFocusPage(){const g=resourceGuides[state.observation]||resourceGuides.other;document.querySelector("#focusIcon").textContent=g.icon||"🔎";document.querySelector("#focusObservation").textContent=getObservationText();document.querySelector("#focusQuestion").textContent=g.focus;}
 
 function renderResourceGuide(){
   const g=resourceGuides[state.observation]||resourceGuides.other;
-  document.querySelector("#resourceTitle").textContent=g.title;document.querySelector("#resourceIntro").textContent=g.intro;
-  document.querySelector("#sourceSummary").innerHTML=`<strong>Observation you are checking:</strong> ${getObservationText()}`;
+  document.querySelector("#resourceTitle").textContent="Use this resource to check your observation";
   document.querySelector("#resourceName").textContent=g.name;document.querySelector("#resourceLink").href=g.url;
   document.querySelector("#resourceSteps").innerHTML=g.steps.map((x,i)=>`<li><span>${i+1}</span><p>${x}</p></li>`).join("");
+  document.querySelector("#resourceQuestion").textContent=g.focus;
   document.querySelector("#resourceLookFor").textContent=g.look;
   const clue=document.querySelector("#resourceClue");clue.classList.toggle("hidden",!g.clue);clue.innerHTML=g.clue||"";
 }
@@ -140,7 +149,7 @@ document.querySelectorAll(".verdict").forEach(btn=>btn.addEventListener("click",
 }));
 document.querySelectorAll('input[name="changed"]').forEach(r=>r.addEventListener("change",e=>{state.changed=e.target.value;saveLocal();validateComparison();}));
 function validateComparison(){document.querySelector("#compareNext").disabled=!(state.verdict&&state.changed);}
-document.querySelector("#compareNext").addEventListener("click",()=>showPage(8));
+document.querySelector("#compareNext").addEventListener("click",()=>showPage(9));
 function updateComparisonReminder(){document.querySelector("#observationReminder").innerHTML=`<strong>Observation you are checking:</strong> ${getObservationText()}`;}
 function updateReview(){
   const g=resourceGuides[state.observation]||resourceGuides.other;

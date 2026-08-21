@@ -204,51 +204,50 @@
 </section>
 
 <!-- PAGE 6 -->
-<section class="page illustrated-page sources-page" data-page="5" id="sources">
-  <div class="card">
-    <div class="illustration small" aria-hidden="true"><span class="sparkle">✦</span>
-      <svg viewBox="0 0 340 180">
-        <rect x="54" y="42" width="95" height="96" rx="16" class="ill-card1"/>
-        <rect x="123" y="26" width="95" height="112" rx="16" class="ill-card2"/>
-        <rect x="192" y="50" width="95" height="88" rx="16" class="ill-card3"/>
-        <path d="M77 105l18-24 17 11 15-29" class="ill-curve"/>
-        <path d="M148 102h45M148 80h35M148 58h25" class="ill-line"/>
-        <circle cx="238" cy="82" r="17" class="ill-sun"/>
-      </svg>
+<section class="page illustrated-page focus-page" data-page="5" id="focus">
+  <div class="card focus-card">
+    <p class="kicker">🔎 Your question</p>
+    <h2>Here’s the observation you’re checking</h2>
+    <div class="observation-hero"><span id="focusIcon" aria-hidden="true">🌡️</span><strong id="focusObservation"></strong></div>
+    <div class="focus-question">
+      <h3>Keep this question in mind</h3>
+      <p id="focusQuestion"></p>
     </div>
-    <p class="kicker">🧭 A guide for your observation</p>
-    <h2 id="resourceTitle">Let’s check the climate record</h2>
-    <p id="resourceIntro"></p>
-    <div id="sourceSummary" class="selected-summary notebook-strip"></div>
-    <article class="resource-guide">
+    <p class="focus-note">Look across many years rather than focusing on one unusual year. The long view is what helps a climate pattern come into focus.</p>
+  </div>
+  <div class="navrow"><button class="secondary back">← Back</button><button class="primary next">Show me how to check it →</button></div>
+</section>
+
+<!-- PAGE 8 -->
+<section class="page illustrated-page sources-page" data-page="6" id="sources">
+  <div class="card">
+    <p class="kicker">🧭 Check the climate record</p>
+    <h2 id="resourceTitle">Use this resource</h2>
+    <p class="resource-intro-short">Follow the settings below. You do not need to learn the whole tool—just use it to answer your question.</p>
+    <article class="resource-guide compact-guide">
       <div class="resource-heading">
         <div><span class="tag">Your resource</span><h3 id="resourceName"></h3></div>
         <a id="resourceLink" class="resource-button" href="#" target="_blank" rel="noopener">Open resource ↗</a>
       </div>
-      <div class="guide-steps">
-        <h3>Follow these steps</h3>
-        <ol id="resourceSteps"></ol>
+      <div class="guide-columns">
+        <div class="guide-steps">
+          <h3>Set up the resource</h3>
+          <ol id="resourceSteps"></ol>
+          <div id="resourceClue" class="mini-clue hidden"></div>
+        </div>
+        <aside class="question-sticky">
+          <span>🔎 Keep your question in view</span>
+          <strong id="resourceQuestion"></strong>
+          <div id="resourceLookFor"></div>
+        </aside>
       </div>
-      <div class="look-for">
-        <h3>🔎 What should I notice?</h3>
-        <div id="resourceLookFor"></div>
-      </div>
-      <div id="resourceClue" class="notice hidden"></div>
     </article>
-    <div class="notice">
-      <strong>🔭 Zoom out in time.</strong>
-      <span>One unusual year is weather. Looking across many years helps a climate pattern come into focus.</span>
-    </div>
-    <div class="soft-box">
-      <strong>When you’re ready</strong>
-      <p>Come back to this tab with one pattern, trend, or surprise you noticed. You do not need to become a climate-data expert.</p>
-    </div>
   </div>
   <div class="navrow"><button class="secondary back">← Back</button><button class="primary next">I checked the record →</button></div>
 </section>
 
-<!-- PAGE 7 -->
-<section class="page illustrated-page pattern-page" data-page="6" id="pattern">
+<!-- PAGE 8 -->
+<section class="page illustrated-page pattern-page" data-page="7" id="pattern">
   <div class="card">
     <div class="illustration small" aria-hidden="true"><span class="sparkle">✦</span>
       <svg viewBox="0 0 340 180">
@@ -274,8 +273,8 @@
   <div class="navrow"><button class="secondary back">← Back</button><button class="primary next">Compare with the observation →</button></div>
 </section>
 
-<!-- PAGE 8 -->
-<section class="page illustrated-page comparison-page" data-page="7" id="comparison">
+<!-- PAGE 9 -->
+<section class="page illustrated-page comparison-page" data-page="8" id="comparison">
   <div class="card">
     <div class="illustration small" aria-hidden="true"><span class="sparkle">✦</span>
       <svg viewBox="0 0 340 180">
@@ -310,8 +309,8 @@
   <div class="navrow"><button class="secondary back">← Back</button><button id="compareNext" class="primary" disabled>Review my result →</button></div>
 </section>
 
-<!-- PAGE 9 -->
-<section class="page illustrated-page review-page" data-page="8" id="review">
+<!-- PAGE 10 -->
+<section class="page illustrated-page review-page" data-page="9" id="review">
   <div class="card">
     <div class="illustration small" aria-hidden="true"><span class="sparkle">✦</span>
       <svg viewBox="0 0 340 180">
@@ -336,7 +335,7 @@
 </section>
 
 <!-- PAGE 10 -->
-<section class="page illustrated-page journal-page" data-page="9" id="journal">
+<section class="page illustrated-page journal-page" data-page="10" id="journal">
   <div class="card finish">
     <div class="illustration small" aria-hidden="true"><span class="sparkle">✦</span>
       <svg viewBox="0 0 340 180">
