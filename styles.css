@@ -350,7 +350,7 @@ body{
 }
 .review-observation{
   margin:.35rem 0 0;
-  color:#D73F09;
+  color:#513766;
   font-size:1.38rem;
   line-height:1.3;
   font-weight:800;
@@ -376,7 +376,7 @@ body{
   color:#745c86;
 }
 .summary-answer{
-  color:#D73F09;
+  color:#513766;
   font-size:1.18rem;
   font-weight:800;
   margin-top:.55rem;
@@ -397,6 +397,6 @@ body{
   color:#513766;
 }
 .evidence-answer-list .evidence-answer span{
-  color:#D73F09;
+  color:#513766;
   font-weight:800;
 }
