@@ -538,3 +538,28 @@ body{
   body.printing-interview #reflectionNotesHeading{font-size:13pt!important;margin:.05in 0!important}
   body.printing-interview #reflectionNotesHelp{font-size:10.5pt!important;margin:0!important}
 }
+
+/* v17 guaranteed interview print control */
+#interviewReturn .print-interview-actions{
+  display:block!important;
+  margin:1rem 0;
+  padding:1rem;
+  border:2px solid #5b3f73;
+  border-radius:16px;
+  background:#fbf8fd;
+}
+#interviewReturn .print-interview-button{
+  display:inline-flex!important;
+  align-items:center;
+  justify-content:center;
+  min-height:54px;
+  font-size:1.05rem;
+  padding:.8rem 1.1rem;
+}
+#interviewReturn .print-interview-actions p{
+  margin:.5rem 0 0;
+  font-size:.95rem;
+}
+@media print{
+  body.printing-interview #interviewReturn{display:none!important}
+}
